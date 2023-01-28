@@ -1,0 +1,33 @@
+---
+title: "MP1"
+author: "Tingwei Hu"
+date: "2023-01-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r, data tidying, message=FALSE}
+dat <- list() #an empty list
+
+f <- list.files(pattern=".csv") #store the file names
+
+for(i in f){
+  m <- unlist(strsplit(i,"_"))
+  who <- m[1]
+  rep <- gsub(".csv","",m[3])
+  dat.i <- read_csv(i)%>%
+    mutate(who=who,rep=rep)
+  dat[[i]] <- dat.i
+}
+
+all.dat <- do.call(rbind,dat)
+```
+
+```{r,analysis}
+
+
+```
