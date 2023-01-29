@@ -59,9 +59,8 @@ summary(one.way)
 # Maximum Vertical Displacement
 ```{r}
 max.dat %>% 
-  ggplot(aes(x=rep,y=max,col=who))+
-  geom_point()+
-  geom_smooth(method=lm)+
+  ggplot(aes(x=as.numeric(rep),y=max,col=who))+geom_point()+
+  geom_smooth(method='lm',se=FALSE)+
   xlab('Replicate')+
   ylab('Maximum Jump Height (cm)')
 ```
