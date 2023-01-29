@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
-
+# Data Prep
 ```{r, data tidying, message=FALSE}
 dat <- list() #an empty list
 
@@ -27,7 +27,42 @@ for(i in f){
 all.dat <- do.call(rbind,dat)
 ```
 
-```{r,analysis}
-
-
+```{r,max,message=FALSE}
+max.dat <- all.dat %>% 
+  group_by(who,rep) %>%
+  summarise(max = max(cm))
 ```
+
+```{r,SEM}
+se <- function(x){sd(x)/sqrt(length(x))}
+m.max <- max.dat%>%
+  group_by(who)%>%
+  summarise(mean.max=mean(max),sd.max=sd(max),se.max=se(max))
+m.max <- m.max %>% 
+  mutate(ymin=mean.max-se.max,ymax=mean.max+se.max)
+```
+
+# Analysis
+## Ploting Mean Maximums and ANOVA
+```{r,plotmeanmax}
+m.max %>% 
+  ggplot(aes(who,mean.max,col=who))+geom_point()+
+  geom_errorbar(mapping=aes(ymax=ymax,ymin=ymin),width=0.2)+
+  ylab('Mean of Maximums from Each Jump (cm)')
+```
+```{r,anova}
+one.way <- max.dat %>%
+  aov(max ~ who,.)
+summary(one.way)
+```
+
+# Maximum Vertical Displacement
+```{r}
+max.dat %>% 
+  ggplot(aes(x=rep,y=max,col=who))+
+  geom_point()+
+  geom_smooth(method=lm)+
+  xlab('Replicate')+
+  ylab('Maximum Jump Height (cm)')
+```
+
