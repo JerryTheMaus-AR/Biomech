@@ -55,8 +55,9 @@ one.way <- max.dat %>%
   aov(max ~ who,.)
 summary(one.way)
 ```
+Although Zoe seemed to have the numerically higher mean maximum jump height across replicates, one-way ANOVA revealed that the difference was not significant (*F*(1)=0.447,*p*=0.523). As the plot also shows, Ollie's mean maximum jump height is within one SEM of Zoe's mean maximum jump height across replicates. This indicates that neither Ollie nor Zoe had better jumping performance than the other in this experiment.Assuming they are of similar ages, this is to be expected. 
 
-# Maximum Vertical Displacement
+## Maximum Vertical Displacement
 ```{r}
 max.dat %>% 
   ggplot(aes(x=as.numeric(rep),y=max,col=who))+geom_point()+
@@ -64,4 +65,4 @@ max.dat %>%
   xlab('Replicate')+
   ylab('Maximum Jump Height (cm)')
 ```
-
+Zoe's jump height trend line has a negative slope, whereas Ollie's has a positive slope. This could be because Zoe was getting more tired every replicate. It could also be that Ollie was not warmed up properly or saw Zoe jumping higher and put in more effort in the later replicates.
