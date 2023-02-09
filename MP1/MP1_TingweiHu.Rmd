@@ -66,3 +66,5 @@ max.dat %>%
   ylab('Maximum Jump Height (cm)')
 ```
 Zoe's jump height trend line has a negative slope, whereas Ollie's has a positive slope. This could be because Zoe was getting more tired every replicate. It could also be that Ollie was not warmed up properly or saw Zoe jumping higher and put in more effort in the later replicates.
+
+Hello
