@@ -1,4 +1,4 @@
-Nr	TID	PID	x [pixel]	y [pixel]	t [sec]	I [val]	Len [pixel]	D2S [pixel]	D2R [pixel]	D2P [pixel]	v [pixel/sec]	? [deg]	?? [deg]
+Nr	TID	PID	x [pixel]	y [pixel]	t [sec]	I [val]	Len [pixel]	D2S [pixel]	D2R [pixel]	D2P [pixel]	v [pixel/sec]	α [deg]	Δα [deg]
 1	1	1	772	556	0	43.4	0	0	NA	NA	NA	NA	NA
 2	1	2	772	556	0	44.4	0	0	NA	0	NA	0	NA
 3	1	3	774	556	0	29.4	2	2	NA	2	NA	0	0
