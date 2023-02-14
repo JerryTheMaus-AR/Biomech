@@ -65,10 +65,10 @@ head(walk.wide)
 
 ```{r,tilt angle}
 walk.wide <- walk.wide %>%
-  mutate(angle = atan(abs(x_hipR-x_hipC)/abs(y_hipR-y_hipC)))
+  mutate(angle = atan(abs(x_hipR-x_hipC)/abs(y_hipR-y_hipC))*180/pi)
 ```
 
-```{r,max tilt angle,eval=FALSE}
+```{r,max tilt angle}
 walk.wide.max <- walk.wide %>% 
   group_by(subject,speed) %>% 
   drop_na(angle) %>% 
