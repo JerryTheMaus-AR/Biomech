@@ -77,7 +77,8 @@ walk.wide.max
 ```
 
 ```{r}
-
-
+class.gait <- read_csv('class_gait.csv') %>% 
+  na.omit()
+class.gait
 ```
 # References

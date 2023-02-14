@@ -1,4 +1,4 @@
-0,sex,leg length in m,Mass in Kg, vmax in ms^-1?,recorded walking in ms^-1?,Froude number,normal mean maximum pelvic tilt angle,fast mean maximum pelvic tilt angle
+0,sex,leg_length_m,Mass_Kg,vmax_ms^-1,recorded_walking_ms^-1,Froude_number,norm_mean_max_pt_angle,fast_mean_max_pt_angle
 1,Female,0.83,60,2.85,1.29,0.453,5.68,5.15
 2,Female,0.84,58.25,2.87,1.61,0.56,7.77,8.99
 3,Male,0.85,108.86,2.89,,,,
