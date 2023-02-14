@@ -81,4 +81,12 @@ class.gait <- read_csv('class_gait.csv') %>%
   na.omit()
 class.gait
 ```
+
+# Report Question 2
+```{r}
+class.gait %>% 
+  ggplot(aes(x=leg_length_m,y=`recorded_walking_ms^-1`,col=sex))+geom_point()
+class.gait %>% 
+  ggplot(aes(x=Mass_Kg,y=`recorded_walking_ms^-1`,col=sex))+geom_point()
+```
 # References
