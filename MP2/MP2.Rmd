@@ -25,5 +25,9 @@ for(i in walk.files){
   walk.dat[[i]] <- walk.i%>%
     mutate(speed=speed,subject=subject)
 }
+```
 
+```{r,combine}
+walk.dat <- do.call(rbind,walk.dat)
+head(walk.dat)
 ```
