@@ -63,8 +63,16 @@ walk.wide <- walk.dat2%>%
 head(walk.wide)
 ```
 
-```{r,max tilt angle}
+```{r,tilt angle}
 walk.wide <- walk.wide %>%
   mutate(angle = atan(abs(x_hipR-x_hipC)/abs(y_hipR-y_hipC)))
 ```
+
+```{r,max tilt angle,eval=FALSE}
+walk.wide.max <- walk.wide %>% 
+  group_by(subject,speed) %>% 
+  summarise(max=max(angle))
+walk.wide.max
+```
+
 # References
