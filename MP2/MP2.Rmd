@@ -10,6 +10,7 @@ bibliography:BIOL5380.bib
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(av)
+library(ggpubr)
 ```
 
 
@@ -89,6 +90,9 @@ class.gait %>%
   xlab('Leg Length (m)')+
   ylab('Recorded Pendulum Walking Speed (m/s)')+
   ggtitle('Size vs. Pendulum Walking Speed by Sex')
+class.gait %>% 
+  ggplot(aes(x=sex,y=`recorded_walking_ms^-1`))+geom_boxplot()+
+  stat_compare_means(method ='t.test')
 ```
 
 
