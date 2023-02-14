@@ -53,14 +53,18 @@ walk.dat2%>%
 
 ```{r,more}
 walk.dat2 <- walk.dat2%>%
-  mutate(TID=replace(TID, TID==1, "hipC"))%>%
-  mutate(TID=replace(TID, TID==2, "hipR"))
+  mutate(TID=replace(TID, TID==1, "hipR"))%>%
+  mutate(TID=replace(TID, TID==2, "hipC"))
 head(walk.dat2)
 ```
 ```{r,pivot wide}
 walk.wide <- walk.dat2%>%
   pivot_wider(names_from=TID,values_from=c("x","y"))
 head(walk.wide)
+```
 
+```{r,max tilt angle,eval=FALSE}
+walk.wide %>%
+  
 ```
 # References
