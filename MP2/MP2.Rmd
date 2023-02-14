@@ -12,7 +12,7 @@ library(av)
 ```
 
 
-```{r,more processing}
+```{r,more processing, message=FALSE}
 walk.files <- list.files()[grep("walk_.*.txt",list.files())]
 print(walk.files)
 
