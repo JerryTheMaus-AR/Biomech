@@ -31,3 +31,29 @@ for(i in walk.files){
 walk.dat <- do.call(rbind,walk.dat)
 head(walk.dat)
 ```
+```{r,ok}
+colnames(walk.dat) <- str_remove(colnames(walk.dat)," \\[pixel\\]| \\[sec\\]")
+head(walk.dat)
+```
+```{r,plot}
+walk.dat2 <- walk.dat%>%
+  select(TID,PID,x,y,subject,speed)
+walk.dat2%>%
+  ggplot(aes(x,y,col=speed))+geom_point()+facet_grid(subject~.)
+```
+```{r,more plots}
+walk.dat2 <- walk.dat2%>%
+  group_by(speed,subject)%>%
+  mutate(y=abs(y-max(y)))
+walk.dat2%>%
+  ggplot(aes(x,y,col=speed))+geom_point()+facet_grid(subject~.)#grid it with columns = to speed
+
+```
+
+```{r,more}
+walk.dat2 <- walk.dat2%>%
+  mutate(TID=replace(TID, TID==1, "hipR"))%>%
+  mutate(TID=replace(TID, TID==2, "hipC"))
+head(walk.dat2)
+```
+
