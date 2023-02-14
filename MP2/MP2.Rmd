@@ -13,9 +13,12 @@ library(av)
 library(ggpubr)
 library(car)
 ```
+# Introduction
+The classic inverted pendulum (IP) model is a powerful tool for analyzing the Newtonian physics and mechanisms underlying bipedal locomotion. This mathematical model predicts that the square of the maximum velocity is less than or equal to the product of gravity and the pendulum length: v2gL. For predicting bipedal locomotion, the IP model suggests that the maximum walking speed is defined as being less than or equal gL, where L represents leg length. However, this result may not accurately describe realized human gaits as it fails to consider other elements that contribute to walking such as mass and movement of surrounding structures. To evaluate the IP model’s ability in accurately predicting human walking, we will investigate the difference in maximum walking velocities under pendulum walking and normal walking, and the changes in pelvic tilt angle at various normal walking speeds.
 
-
-```{r,more processing, message=FALSE}
+# Methods
+## Initial Processing, Data Tidying
+```{r, message=FALSE}
 walk.files <- list.files()[grep("walk_.*.txt",list.files())]
 print(walk.files)
 
@@ -65,6 +68,7 @@ walk.wide <- walk.dat2%>%
 head(walk.wide)
 ```
 
+## Calculate Maximum Pelvic Tilt Angle
 ```{r,tilt angle}
 walk.wide <- walk.wide %>%
   mutate(angle = atan(abs(x_hipR-x_hipC)/abs(y_hipR-y_hipC))*180/pi)
@@ -78,11 +82,13 @@ walk.wide.max <- walk.wide %>%
 walk.wide.max
 ```
 
+## Load in Class Data
 ```{r}
 class.gait <- read_csv('class_gait.csv') %>% 
   na.omit()
 class.gait
 ```
+# Report Question 1
 
 # Report Question 2
 ```{r}
@@ -105,6 +111,7 @@ ancova_model <- aov(`recorded_walking_ms^-1` ~ sex + leg_length_m, data = class.
 Anova(ancova_model, type="III") 
 
 ```
+Our data shows only a slightly significant correlation between walking speed and sex (p=0.048). Females had an average walking speed of 1.29m/s while males had an average speed of 1.43m/s. This data is based on the comparison of males and females during gait, so it is unclear as to exactly which factors contribute to this significant difference. According to an article published by the NCBI, it is anatomically proven that pelvic structural differences exist between biologically male and female persons (@lewis2017human). Females tend to have wider, broader hips while males have a narrower pelvis and a more anteriorly curved sacrum. Differences in bone shape alter the structure of the acetabulum or hip joint, which may cause changes in the motion of walking. The article stated that “it remains unclear if these sex-specific differences during gait are related to specific pelvic structure or to differences in body size and height”. After performing an ANCOVA test that examined the covariance among categorical and continuous variables, it can be concluded that there is no significant difference between sex (p=0.175) or leg length (p=0.394) and gait speed.Therefore, it is not possible to draw concrete conclusions as to how human size and sex impact an individual's gait speed.
 
 # Report Question 3
 ```{r,}
@@ -132,5 +139,8 @@ ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_
 ```{r, Length Plot}
 ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Leg Length (m)")
 ```
+
+# Author Contributions
+Authors contributed equally on all parts of the project.
 
 # References
