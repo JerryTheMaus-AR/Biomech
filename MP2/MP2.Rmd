@@ -71,6 +71,7 @@ walk.wide <- walk.wide %>%
 ```{r,max tilt angle,eval=FALSE}
 walk.wide.max <- walk.wide %>% 
   group_by(subject,speed) %>% 
+  drop_na(angle) %>% 
   summarise(max=max(angle))
 walk.wide.max
 ```
