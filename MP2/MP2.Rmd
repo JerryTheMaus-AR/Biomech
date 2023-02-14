@@ -11,26 +11,6 @@ library(tidyverse)
 library(av)
 ```
 
-```{r,more}
-f <- list.files(full.names = T,pattern=".MOV")
-
-#create a place to store images
-dir.create("images")
-
-#for each file, f, breakup the .MOV into the images and build avi files
-for(i in f){
-  if(dir.exists("images")) unlink("images",recursive = T)
-
-  #extract images
-  av_video_images(i,destdir ="images",format="tiff")
-  
-  #list images
-  f.i <- list.files("images",full.names = T)
-  
-  #make the avi from the images from the MOV
-  av_encode_video(f.i,gsub("MOV","avi",basename(i)),codec = "rawvideo")
-}
-```
 
 ```{r,more processing}
 walk.dat <- list() #make a list for storing
