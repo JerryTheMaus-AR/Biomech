@@ -148,11 +148,6 @@ ggplot(class.gait2, aes(x= ID, y= difference))+geom_point()+geom_smooth(method= 
 ```{r, Mass Plot}
 ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_point()+ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Mass (kg)")
 
-ancova_model_2 <- aov(`norm_mean_max_pt_angle` ~ sex + leg_length_m, data = class.gait)
-Anova(ancova_model_2, type="III") 
-
-ancova_model_3 <- aov(`norm_mean_max_pt_angle` ~ sex + Mass_Kg, data = class.gait)
-Anova(ancova_model_3, type="III") 
 ```
 
 ***Figure ***
