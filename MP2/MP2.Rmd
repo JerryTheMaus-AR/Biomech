@@ -91,10 +91,14 @@ class.gait %>%
   ggtitle('Size vs. Pendulum Walking Speed by Sex')
 ```
 
+
+# Report Question 4
 ```{r, Mass Plot}
 ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_point()+ylab("Normal Mean Maximum Pelvic Tilt") + xlab("Mass (kg)")
 
 ```
+
+***Figure ***
 
 ```{r, Length Plot}
 ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt") + xlab("Leg Length (m)")
