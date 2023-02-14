@@ -106,6 +106,20 @@ Anova(ancova_model, type="III")
 
 ```
 
+# Report Question 3
+```{r,}
+class.gait2 <- class.gait
+colnames(class.gait2)[colnames(class.gait2) == "0"] = "ID"
+class.gait2 <- class.gait2 %>%
+  group_by(ID) %>%
+  summarize(difference= fast_mean_max_pt_angle - norm_mean_max_pt_angle)
+class.gait2
+
+ggplot(class.gait2, aes(x= ID, y= difference))+geom_point()+geom_smooth(method= lm, se= FALSE)+annotate("text", x= 15, y= 7, label= (paste0("slope==", coef(lm(class.gait2$difference ~ class.gait2$ID))[2])),parse= TRUE)+labs(caption= "This is my caption") + theme(plot.caption= element_text(hjust=0))+xlab("Individual")+ylab("Difference in Max Mean Pelvic Tilt Angle (deg)")
+
+```
+
+
 
 # Report Question 4
 ```{r, Mass Plot}
