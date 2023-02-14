@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(av)
 library(ggpubr)
+library(car)
 ```
 
 
@@ -90,11 +91,19 @@ class.gait %>%
   xlab('Leg Length (m)')+
   ylab('Recorded Pendulum Walking Speed (m/s)')+
   ggtitle('Size vs. Pendulum Walking Speed by Sex')
+
+#gait by sex (only) boxplot
 class.gait %>% 
   ggplot(aes(x=sex,y=`recorded_walking_ms^-1`))+geom_boxplot()+
   stat_compare_means(method ='t.test')
 
-t.test(`recorded_walking_ms^-1`~sex,data=class.gait)
+#leg length by sex
+t.test(leg_length_m~sex,data=class.gait)
+
+#analysis of covariance: Vwalking ~ sex + leg_length_m
+ancova_model <- aov(`recorded_walking_ms^-1` ~ sex + leg_length_m, data = class.gait)
+Anova(ancova_model, type="III") 
+
 ```
 
 
