@@ -101,7 +101,7 @@ class.gait.ratio <- class.gait.ratio %>%
   summarize(difference= as.numeric(vmax) - as.numeric(recorded_v), Froude_number= Froude_number)
 class.gait.ratio
 
-ggplot(class.gait.ratio, aes(x= Froude_number, y= difference))+geom_point()+geom_smooth(method= lm, se= F)
+ggplot(class.gait.ratio, aes(x= Froude_number, y= difference))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$difference ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)
 ```
 The class-wide theoretical pendulum walking speed was significantly larger than actual recorded pendulum walking speed.
 # Report Question 2
