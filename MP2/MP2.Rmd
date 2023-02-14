@@ -13,6 +13,9 @@ library(av)
 
 
 ```{r,more processing}
+walk.files <- list.files()[grep("walk_.*.txt",list.files())]
+print(walk.files)
+
 walk.dat <- list() #make a list for storing
 for(i in walk.files){
   walk.i <- read_delim(i,delim="\t") #read data as a tibble
