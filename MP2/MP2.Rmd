@@ -156,6 +156,13 @@ ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_
 ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Leg Length (m)")
 ```
 
+
+```{r, Anova Tests}
+RUNNING ANOVA TESTS FOR EACH VARIABLE AND THEN THAT CAN BE ANALYZED
+
+
+```
+
 # Author Contributions
 Authors contributed equally on all parts of the project.
 
