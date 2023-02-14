@@ -1,0 +1,79 @@
+---
+title: "MP1"
+author: "Tingwei Hu"
+date: "2023-01-24"
+output: html_document
+---
+
+<style>
+div.comment pre { background-color:#ffbbbb; }
+div.comment pre.r { background-color:#ffbbbb; }
+div.comment {color: red;}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+# Data Prep
+```{r, data tidying, message=FALSE}
+dat <- list() #an empty list
+
+f <- list.files(pattern=".csv") #store the file names
+
+for(i in f){
+  m <- unlist(strsplit(i,"_"))
+  who <- m[1]
+  rep <- gsub(".csv","",m[3])
+  dat.i <- read_csv(i)%>%
+    mutate(who=who,rep=rep)
+  dat[[i]] <- dat.i
+}
+
+all.dat <- do.call(rbind,dat)
+```
+
+```{r,max,message=FALSE}
+max.dat <- all.dat %>% 
+  group_by(who,rep) %>%
+  summarise(max = max(cm))
+```
+
+```{r,SEM}
+se <- function(x){sd(x)/sqrt(length(x))}
+m.max <- max.dat%>%
+  group_by(who)%>%
+  summarise(mean.max=mean(max),sd.max=sd(max),se.max=se(max))
+m.max <- m.max %>% 
+  mutate(ymin=mean.max-se.max,ymax=mean.max+se.max)
+```
+
+# Analysis
+## Ploting Mean Maximums and ANOVA
+```{r,plotmeanmax}
+m.max %>% 
+  ggplot(aes(who,mean.max,col=who))+geom_point()+
+  geom_errorbar(mapping=aes(ymax=ymax,ymin=ymin),width=0.2)+
+  ylab('Mean of Maximums from Each Jump (cm)')
+```
+```{r,anova}
+one.way <- max.dat %>%
+  aov(max ~ who,.)
+summary(one.way)
+```
+Although Zoe seemed to have the numerically higher mean maximum jump height across replicates, one-way ANOVA revealed that the difference was not significant (*F*(1)=0.447,*p*=0.523). As the plot also shows, Ollie's mean maximum jump height is within one SEM of Zoe's mean maximum jump height across replicates. This indicates that neither Ollie nor Zoe had better jumping performance than the other in this experiment.Assuming they are of similar ages, this is to be expected. 
+
+## Maximum Vertical Displacement
+```{r}
+max.dat %>% 
+  ggplot(aes(x=as.numeric(rep),y=max,col=who))+geom_point()+
+  geom_smooth(method='lm',se=FALSE)+
+  xlab('Replicate')+
+  ylab('Maximum Jump Height (cm)')
+```
+Zoe's jump height trend line has a negative slope, whereas Ollie's has a positive slope. This could be because Zoe was getting more tired every replicate. It could also be that Ollie was not warmed up properly or saw Zoe jumping higher and put in more effort in the later replicates.
+
+<div class="comment">
+Excellent. Exactly what we needed.
+
+</div>
