@@ -33,6 +33,14 @@ for(i in f){
 ```
 
 ```{r,more processing}
-
+walk.dat <- list() #make a list for storing
+for(i in walk.files){
+  walk.i <- read_delim(i,delim="\t") #read data as a tibble
+  met.dat <- unlist(strsplit(i,"_")) #split i for metadata and unlist it
+  speed <- met.dat[2] #get speed
+  subject <- gsub(".txt","",met.dat[3]) #remove ".txt" 
+  walk.dat[[i]] <- walk.i%>%
+    mutate(speed=speed,subject=subject)
+}
 
 ```
