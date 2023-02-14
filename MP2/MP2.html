@@ -388,19 +388,7 @@ Patmanidis</h4>
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The classic inverted pendulum (IP) model is a powerful tool for
-analyzing the Newtonian physics and mechanisms underlying bipedal
-locomotion. This mathematical model predicts that the square of the
-maximum velocity is less than or equal to the product of gravity and the
-pendulum length: v2gL. For predicting bipedal locomotion, the IP model
-suggests that the maximum walking speed is defined as being less than or
-equal gL, where L represents leg length. However, this result may not
-accurately describe realized human gaits as it fails to consider other
-elements that contribute to walking such as mass and movement of
-surrounding structures. To evaluate the IP model’s ability in accurately
-predicting human walking, we will investigate the difference in maximum
-walking velocities under pendulum walking and normal walking, and the
-changes in pelvic tilt angle at various normal walking speeds.</p>
+<pre><code>The classic inverted pendulum (IP) model is a powerful tool for analyzing the Newtonian physics and mechanisms underlying bipedal locomotion. This mathematical model predicts that the square of the maximum velocity is less than or equal to the product of gravity and the pendulum length: $v^2 ≤ gL$. For predicting bipedal locomotion, the IP model suggests that the maximum walking speed is defined as being less than or equal to  $\sqrt{gL}$, where L represents leg length. However, this result may not accurately describe realized human gaits as it fails to consider other elements that contribute to walking such as mass and movement of surrounding structures. To evaluate the IP model’s ability in accurately predicting human walking, we will investigate the difference in maximum walking velocities under pendulum walking and normal walking, and the changes in pelvic tilt angle at various normal walking speeds.</code></pre>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
@@ -543,9 +531,21 @@ head(walk.wide)</code></pre>
 </div>
 <div id="report-question-1" class="section level1">
 <h1>Report Question 1</h1>
-</div>
-<div id="report-question-2" class="section level1">
-<h1>Report Question 2</h1>
+<pre class="r"><code>t.test(class.gait$`vmax_ms^-1`,class.gait$`recorded_walking_ms^-1`,paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  class.gait$`vmax_ms^-1` and class.gait$`recorded_walking_ms^-1`
+## t = 41.09, df = 100, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  1.634748 1.800619
+## sample estimates:
+## mean difference 
+##        1.717684</code></pre>
+<p>The class-wide theoretical pendulum walking speed was significantly
+larger than actual recorded pendulum walking speed. # Report Question
+2</p>
 <pre class="r"><code>class.gait %&gt;% 
   ggplot(aes(x=leg_length_m,y=`recorded_walking_ms^-1`,col=sex))+geom_point()+
   xlab(&#39;Leg Length (m)&#39;)+
