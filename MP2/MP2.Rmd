@@ -17,6 +17,8 @@ library(car)
 	The classic inverted pendulum (IP) model is a powerful tool for analyzing the Newtonian physics and mechanisms underlying bipedal locomotion. This mathematical model predicts that the square of the maximum velocity is less than or equal to the product of gravity and the pendulum length: $v^2 ≤ gL$. For predicting bipedal locomotion, the IP model suggests that the maximum walking speed is defined as being less than or equal to  $\sqrt{gL}$, where L represents leg length. However, this result may not accurately describe realized human gaits as it fails to consider other elements that contribute to walking such as mass and movement of surrounding structures. To evaluate the IP model’s ability in accurately predicting human walking, we will investigate the difference in maximum walking velocities under pendulum walking and normal walking, and the changes in pelvic tilt angle at various normal walking speeds.
 
 # Methods
+## Data Collection
+Leg length and body mass were collected for each group member. Pendulum walking speed, slow normal walking speed, and fast normal walking speed were recorded for each group member over 5 meters. In the latter two conditions, a meter stick marked at the center and one of the ends was attached horizontally to the subject's waist area. Videos were taken from in front of the subject's walking path and the trajectory of the markings on the meter stick throughout each video was traced using MTrackJ in ImageJ. Class-wide data were obtained from table linked from the project descriptiion page.
 ## Initial Processing, Data Tidying
 ```{r, message=FALSE}
 walk.files <- list.files()[grep("walk_.*.txt",list.files())]
