@@ -91,6 +91,17 @@ class.gait
 # Report Question 1
 ```{r,froude}
 t.test(class.gait$`vmax_ms^-1`,class.gait$`recorded_walking_ms^-1`,paired=TRUE)
+
+class.gait.ratio <- class.gait
+colnames(class.gait.ratio)[colnames(class.gait.ratio) == "0"] = "ID"
+colnames(class.gait.ratio)[4] = "vmax"
+colnames(class.gait.ratio)[5] = "recorded_v"
+class.gait.ratio <- class.gait.ratio %>%
+  group_by(ID) %>%
+  summarize(ratio= as.numeric(recorded_v) / as.numeric(vmax), Froude_number= Froude_number)
+class.gait.ratio
+
+ggplot(class.gait.ratio, aes(x= ratio, y= Froude_number))+geom_point()+geom_smooth(method= lm, se= F)
 ```
 The class-wide theoretical pendulum walking speed was significantly larger than actual recorded pendulum walking speed.
 # Report Question 2
