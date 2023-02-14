@@ -63,8 +63,8 @@ walk.wide <- walk.dat2%>%
 head(walk.wide)
 ```
 
-```{r,max tilt angle,eval=FALSE}
-walk.wide %>%
-  
+```{r,max tilt angle}
+walk.wide <- walk.wide %>%
+  mutate(angle = atan(abs(x_hipR-x_hipC)/abs(y_hipR-y_hipC)))
 ```
 # References
