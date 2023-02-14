@@ -3,7 +3,7 @@ title: "MP2"
 author: "Tingwei Hu, Eugene Yang, Anya Zhong, Andriana Patmanidis"
 date: "2023-02-14"
 output: html_document
-bibliography:BIOL5380.bib
+bibliography: BIOL5380.bib
 ---
 
 ```{r setup,include=FALSE}
