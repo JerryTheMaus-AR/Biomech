@@ -13,15 +13,15 @@ library(av)
 
 
 ```{r,more processing, message=FALSE}
-walk.files <- list.files()[grep("walk_.*.txt",list.files())]
+walk.files <- list.files()[grep("walk_.*.csv",list.files())]
 print(walk.files)
 
 walk.dat <- list() #make a list for storing
 for(i in walk.files){
-  walk.i <- read_delim(i,delim="\t") #read data as a tibble
+  walk.i <- read_delim(i,delim=",") #read data as a tibble
   met.dat <- unlist(strsplit(i,"_")) #split i for metadata and unlist it
   speed <- met.dat[2] #get speed
-  subject <- gsub(".txt","",met.dat[3]) #remove ".txt" 
+  subject <- gsub(".csv","",met.dat[3]) #remove ".csv" 
   walk.dat[[i]] <- walk.i%>%
     mutate(speed=speed,subject=subject)
 }
