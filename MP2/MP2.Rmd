@@ -85,8 +85,9 @@ class.gait
 # Report Question 2
 ```{r}
 class.gait %>% 
-  ggplot(aes(x=leg_length_m,y=`recorded_walking_ms^-1`,col=sex))+geom_point()
-class.gait %>% 
-  ggplot(aes(x=Mass_Kg,y=`recorded_walking_ms^-1`,col=sex))+geom_point()
+  ggplot(aes(x=leg_length_m,y=`recorded_walking_ms^-1`,col=sex))+geom_point()+
+  xlab('Leg Length (m)')+
+  ylab('Recorded Pendulum Walking Speed (m/s)')+
+  ggtitle('Size vs. Pendulum Walking Speed by Sex')
 ```
 # References
