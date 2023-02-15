@@ -100,10 +100,10 @@ colnames(class.gait.ratio)[5] = "vmax"
 colnames(class.gait.ratio)[6] = "recorded_v"
 class.gait.ratio <- class.gait.ratio %>%
   group_by(ID) %>%
-  summarize(difference= as.numeric(vmax) - as.numeric(recorded_v), Froude_number= Froude_number)
+  summarize(ratio= as.numeric(recorded_v) / as.numeric(vmax), Froude_number= Froude_number)
 class.gait.ratio
 
-ggplot(class.gait.ratio, aes(x= Froude_number, y= difference))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$difference ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)
+ggplot(class.gait.ratio, aes(x= Froude_number, y= ratio))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$ratio ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)+labs(caption= str_wrap("Figure 1. This figure depicts the relationship between mean max pelvic tilt angle (deg) and mass (kg). The data is further categorized by the individual's sex.")) + theme(plot.caption= element_text(hjust=0))
 ```
 The class-wide theoretical pendulum walking speed was significantly larger than actual recorded pendulum walking speed.
 # Report Question 2
@@ -138,7 +138,7 @@ class.gait2 <- class.gait2 %>%
   summarize(difference= fast_mean_max_pt_angle - norm_mean_max_pt_angle)
 class.gait2
 
-ggplot(class.gait2, aes(x= ID, y= difference))+geom_point()+geom_smooth(method= lm, se= FALSE)+annotate("text", x= 15, y= 7, label= (paste0("slope==", coef(lm(class.gait2$difference ~ class.gait2$ID))[2])),parse= TRUE)+labs(caption= "This is my caption") + theme(plot.caption= element_text(hjust=0))+xlab("Individual")+ylab("Difference in Max Mean Pelvic Tilt Angle (deg)")
+ggplot(class.gait2, aes(x= ID, y= difference))+geom_point()+geom_smooth(method= lm, se= FALSE)+annotate("text", x= 15, y= 7, label= (paste0("slope==", coef(lm(class.gait2$difference ~ class.gait2$ID))[2])),parse= TRUE)+labs(caption= "Figure 4. This figure depicts the difference in max mean pelvic tilt angle between a fast walking speed and a slow walking speed.") + theme(plot.caption= element_text(hjust=0))+xlab("Individual")+ylab("Difference in Max Mean Pelvic Tilt Angle (deg)")
 
 ```
 
@@ -147,14 +147,14 @@ In the figure above, we wanted to see how the max mean pelvic tilt angle would c
 
 # Report Question 4
 ```{r, Mass Plot}
-ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_point()+ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Mass (kg)")
+ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_point()+ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Mass (kg)")+labs(caption= str_wrap("Figure 5. This figure depicts the relationship between mean max pelvic tilt angle (deg) and mass (kg). The data is further categorized by the individual's sex.")) + theme(plot.caption= element_text(hjust=0))
 
 ```
 
 ***Figure ***
 
 ```{r, Length Plot}
-ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Leg Length (m)")
+ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Leg Length (m)")+labs(caption= str_wrap("Figure 6. This figure depicts the relationship between mean max pelvic tilt angle (deg) and leg length (m). The data is further categorized by the individual's sex.")) + theme(plot.caption= element_text(hjust=0))
 ```
 
 ```{r, Anova Tests}
