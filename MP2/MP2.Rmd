@@ -90,7 +90,8 @@ class.gait <- read_csv('class_gait.csv') %>%
   na.omit()
 class.gait
 ```
-# Report Question 1
+# Results
+## Report Question 1
 ```{r,froude}
 t.test(class.gait$`vmax_ms^-1`,class.gait$`recorded_walking_ms^-1`,paired=TRUE)
 
@@ -106,7 +107,7 @@ class.gait.ratio
 ggplot(class.gait.ratio, aes(x= Froude_number, y= ratio))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$ratio ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)+labs(caption= str_wrap("Figure 1. This figure depicts the relationship between the ratio of the recorded velocity for pendulum walking to the predicted maximum velocity and the Froude number")) + theme(plot.caption= element_text(hjust=0))+xlab("Froude Number")+ylab("Ratio of Recorded V to Vmax")
 ```
 The class-wide theoretical pendulum walking speed was significantly larger than actual recorded pendulum walking speed.
-# Report Question 2
+## Report Question 2
 ```{r}
 class.gait %>% 
   ggplot(aes(x=leg_length_m,y=`recorded_walking_ms^-1`,col=sex))+geom_point()+
@@ -129,7 +130,7 @@ Anova(ancova_model, type="III")
 ```
 Our data shows only a slightly significant correlation between walking speed and sex (p=0.048). Females had an average walking speed of 1.29m/s while males had an average speed of 1.43m/s. This data is based on the comparison of males and females during gait, so it is unclear as to exactly which factors contribute to this significant difference. According to an article published by the NCBI, it is anatomically proven that pelvic structural differences exist between biologically male and female persons (@lewis2017human). Females tend to have wider, broader hips while males have a narrower pelvis and a more anteriorly curved sacrum. Differences in bone shape alter the structure of the acetabulum or hip joint, which may cause changes in the motion of walking. The article stated that “it remains unclear if these sex-specific differences during gait are related to specific pelvic structure or to differences in body size and height”. After performing an ANCOVA test that examined the covariance among categorical and continuous variables, it can be concluded that there is no significant difference between sex (p=0.175) or leg length (p=0.394) and gait speed.Therefore, it is not possible to draw concrete conclusions as to how human size and sex impact an individual's gait speed.
 
-# Report Question 3
+## Report Question 3
 ```{r,}
 class.gait2 <- class.gait
 colnames(class.gait2)[colnames(class.gait2) == "0"] = "ID"
@@ -145,7 +146,7 @@ ggplot(class.gait2, aes(x= ID, y= difference))+geom_point()+geom_smooth(method= 
 
 In the figure above, we wanted to see how the max mean pelvic tilt angle would change depending on walking speed. In order to do this, we subtracted the normal max mean pelvic tilt angle from the fast max mean pelvic tilt angle to find the difference between the two. We expected there to be a greater max mean pelvic tilt angle while walking faster compared to walking slower. The data confirmed our expectations as the majority of individuals have a positive difference in max mean pelvic tilt angle between their fast and normal walking speeds. The biomechanic explanation for this expectation is explained in an article published in the anatomical record. In it, they explain that an increase in walking speed is associated with an increase in amplitude of pelvic rotation due to the fact that pelvic step accounts for a greater percentage of total step length (@whitcome2017pelvic). 
 
-# Report Question 4
+## Report Question 4
 ```{r, Mass Plot}
 ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_point()+ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Mass (kg)")+labs(caption= str_wrap("Figure 5. This figure depicts the relationship between mean max pelvic tilt angle (deg) and mass (kg). The data is further categorized by the individual's sex.")) + theme(plot.caption= element_text(hjust=0))
 
@@ -167,6 +168,8 @@ summary(length.aov)
 ```
 
 The data we collected seems to indicate that neither leg length and mass of the body have a strong statistical impact on the max mean pelvic tilt angle. Our figures indicate that there is not a large difference between the impact of mass and leg length on pelvic tilt angles. However, the graph of the mass data is much more clustered and accurate. This was confirmed by running two one-tailed anova tests in order to determine their statistical significance. The anova ran with mass had a p value of 0.228 while the anova ran with leg lengths had a p value of 0.236. These p values indicate that they are not statistically significant differences. However, it does tell us that mass seems to be slightly more correlated to pelvic tilt angle compared to the impact that leg lengths do.
+# Discussions
+
 
 # Author Contributions
 Authors contributed equally on all parts of the project.
