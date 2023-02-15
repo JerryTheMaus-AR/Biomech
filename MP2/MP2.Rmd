@@ -143,6 +143,7 @@ ggplot(class.gait2, aes(x= ID, y= difference))+geom_point()+geom_smooth(method= 
 ```
 
 
+In the figure above, we wanted to see how the max mean pelvic tilt angle would change depending on walking speed. In order to do this, we subtracted the normal max mean pelvic tilt angle from the fast max mean pelvic tilt angle to find the difference between the two. We expected there to be a greater max mean pelvic tilt angle while walking faster compared to walking slower. The data confirmed our expectations as the majority of individuals have a positive difference in max mean pelvic tilt angle between their fast and normal walking speeds. The biomechanic explanation for this expectation is explained in an article published in the anatomical record. In it, they explain that an increase in walking speed is associated with an increase in amplitude of pelvic rotation due to the fact that pelvic step accounts for a greater percentage of total step length (@whitcome2017pelvic). 
 
 # Report Question 4
 ```{r, Mass Plot}
