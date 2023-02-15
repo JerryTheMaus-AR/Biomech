@@ -103,7 +103,7 @@ class.gait.ratio <- class.gait.ratio %>%
   summarize(ratio= as.numeric(recorded_v) / as.numeric(vmax), Froude_number= Froude_number)
 class.gait.ratio
 
-ggplot(class.gait.ratio, aes(x= Froude_number, y= ratio))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$ratio ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)+labs(caption= str_wrap("Figure 1. This figure depicts the relationship between mean max pelvic tilt angle (deg) and mass (kg). The data is further categorized by the individual's sex.")) + theme(plot.caption= element_text(hjust=0))
+ggplot(class.gait.ratio, aes(x= Froude_number, y= ratio))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$ratio ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)+labs(caption= str_wrap("Figure 1. This figure depicts the relationship between the ratio of the recorded velocity for pendulum walking to the predicted maximum velocity and the Froude number")) + theme(plot.caption= element_text(hjust=0))+xlab("Froude Number")+ylab("Ratio of Recorded V to Vmax")
 ```
 The class-wide theoretical pendulum walking speed was significantly larger than actual recorded pendulum walking speed.
 # Report Question 2
