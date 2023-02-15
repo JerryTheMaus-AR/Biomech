@@ -168,6 +168,11 @@ summary(length.aov)
 
 The data we collected seems to indicate that neither leg length and mass of the body have a strong statistical impact on the max mean pelvic tilt angle. Our figures indicate that there is not a large difference between the impact of mass and leg length on pelvic tilt angles. However, the graph of the mass data is much more clustered and accurate. This was confirmed by running two one-tailed anova tests in order to determine their statistical significance. The anova ran with mass had a p value of 0.228 while the anova ran with leg lengths had a p value of 0.236. These p values indicate that they are not statistically significant differences. However, it does tell us that mass seems to be slightly more correlated to pelvic tilt angle compared to the impact that leg lengths do.
 
+
+# Discussion
+In this experiment, bipedal locomotion was modeled by an inverted pendulum. Students performed walking trials that varied in speed (fast and slow) and form (normal and locked knee). It was evident that the class-wide theoretical velocity was significantly larger than the recorded pendulum walking speed. As the calculated Froude number increased, the ratio of the recorded velocity for pendulum walking to the predicted maximum velocity also increased, which signifies that there were points in time when both feet were lifted off the ground. Thus, this is not a reliable model for pendulum walking. In addition, it is not possible to draw concrete conclusions as to how human size and sex impact an individual's gait speed. Our data showed slightly significant differences between walking speed and sex. After further statistical testing emphasizing covariance, it was concluded that correlations between sex or leg length and gait speed were not significant. Measurements of pelvic tilt were collected in conjunction with speed during gait. The majority of individuals had a greater maximum mean pelvic tilt angle while walking faster compared to walking slower. However, further data collection showed neither leg length nor body mass have a strong statistical impact on the maximum mean pelvic tilt angle.
+
+
 # Author Contributions
 Authors contributed equally on all parts of the project.
 
