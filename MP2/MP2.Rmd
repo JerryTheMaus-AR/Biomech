@@ -159,8 +159,11 @@ ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+
 
 
 ```{r, Anova Tests}
-RUNNING ANOVA TESTS FOR EACH VARIABLE AND THEN THAT CAN BE ANALYZED
+mass.aov <- aov(norm_mean_max_pt_angle ~ Mass_Kg, data= class.gait)
+summary(mass.aov)
 
+length.aov <- aov(norm_mean_max_pt_angle ~ leg_length_m, data= class.gait)
+summary(length.aov)
 
 ```
 
