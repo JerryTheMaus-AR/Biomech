@@ -157,7 +157,6 @@ ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_
 ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Leg Length (m)")
 ```
 
-
 ```{r, Anova Tests}
 mass.aov <- aov(norm_mean_max_pt_angle ~ Mass_Kg, data= class.gait)
 summary(mass.aov)
@@ -166,6 +165,8 @@ length.aov <- aov(norm_mean_max_pt_angle ~ leg_length_m, data= class.gait)
 summary(length.aov)
 
 ```
+
+The data we collected seems to indicate that neither leg length and mass of the body have a strong statistical impact on the max mean pelvic tilt angle. Our figures indicate that there is not a large difference between the impact of mass and leg length on pelvic tilt angles. However, the graph of the mass data is much more clustered and accurate. This was confirmed by running two one-tailed anova tests in order to determine their statistical significance. The anova ran with mass had a p value of 0.228 while the anova ran with leg lengths had a p value of 0.236. These p values indicate that they are not statistically significant differences. However, it does tell us that mass seems to be slightly more correlated to pelvic tilt angle compared to the impact that leg lengths do.
 
 # Author Contributions
 Authors contributed equally on all parts of the project.
