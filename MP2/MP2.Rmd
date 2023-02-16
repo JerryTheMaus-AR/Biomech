@@ -14,11 +14,12 @@ library(ggpubr)
 library(car)
 ```
 # Introduction
-	The classic inverted pendulum (IP) model is a powerful tool for analyzing the Newtonian physics and mechanisms underlying bipedal locomotion. This mathematical model predicts that the square of the maximum velocity is less than or equal to the product of gravity and the pendulum length: $v^2 ≤ gL$. For predicting bipedal locomotion, the IP model suggests that the maximum walking speed is defined as being less than or equal to  $\sqrt{gL}$, where L represents leg length. However, this result may not accurately describe realized human gaits as it fails to consider other elements that contribute to walking such as mass and movement of surrounding structures. To evaluate the IP model’s ability in accurately predicting human walking, we will investigate the difference in maximum walking velocities under pendulum walking and normal walking, and the changes in pelvic tilt angle at various normal walking speeds.
+The classic inverted pendulum (IP) model is a powerful tool for analyzing the Newtonian physics and mechanisms underlying bipedal locomotion. This mathematical model predicts that the square of the maximum velocity is less than or equal to the product of gravity and the pendulum length: $v^2 ≤ gL$. For predicting bipedal locomotion, the IP model suggests that the maximum walking speed is defined as being less than or equal to  $\sqrt{gL}$, where L represents leg length. However, this result may not accurately describe realized human gaits as it fails to consider other elements that contribute to walking such as mass and movement of surrounding structures. To evaluate the IP model’s ability in accurately predicting human walking, we will investigate the difference in maximum walking velocities under pendulum walking and normal walking, and the changes in pelvic tilt angle at various normal walking speeds.
 
 # Methods
 ## Data Collection
 Leg length and body mass were collected for each group member. Pendulum walking speed, slow normal walking speed, and fast normal walking speed were recorded for each group member over 5 meters. In the latter two conditions, a meter stick marked at the center and one of the ends was attached horizontally to the subject's waist area. Videos were taken from in front of the subject's walking path. The video footage was converted from MOV into AVI files and analyzed using ImageJ with the MTrackJ plugin. The dot at the center of the subjects’ hips was designated as point 1, and the dot lateral of the left hip was designated as point 2. Points 1 and 2 were labeled on each frame where the subject was actively engaged in walking for each of their two files. The video files were rotated 90º counter clockwise, so the y-axis of the image represents the horizontal distance relative to the orientation subject, and the x-axis of the image represents the vertical distance relative to the orientation subject. The data containing the positioning of these labeled points were exported as text files and loaded into R studio. The pelvic tilt angle was calculated as the arctan of the vertical distance (difference along the x-axis)  over the horizontal distance (difference along the y-axis) for each AVI file. Class-wide data were obtained from table linked from the project description page.
+
 ## Initial Processing, Data Tidying
 ```{r, message=FALSE}
 walk.files <- list.files()[grep("walk_.*.txt",list.files())]
@@ -107,6 +108,7 @@ class.gait.ratio
 ggplot(class.gait.ratio, aes(x= Froude_number, y= ratio))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$ratio ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)+labs(caption= str_wrap("Figure 1. This figure depicts the relationship between the ratio of the recorded velocity for pendulum walking to the predicted maximum velocity and the Froude number")) + theme(plot.caption= element_text(hjust=0))+xlab("Froude Number")+ylab("Ratio of Recorded V to Vmax")
 ```
 The class-wide theoretical pendulum walking speed was significantly larger than actual recorded pendulum walking speed.
+
 ## Report Question 2
 ```{r}
 class.gait %>% 
@@ -152,7 +154,6 @@ ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_
 
 ```
 
-***Figure ***
 
 ```{r, Length Plot}
 ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Leg Length (m)")+labs(caption= str_wrap("Figure 6. This figure depicts the relationship between mean max pelvic tilt angle (deg) and leg length (m). The data is further categorized by the individual's sex.")) + theme(plot.caption= element_text(hjust=0))
@@ -168,9 +169,6 @@ summary(length.aov)
 ```
 
 The data we collected seems to indicate that neither leg length and mass of the body have a strong statistical impact on the max mean pelvic tilt angle. Our figures indicate that there is not a large difference between the impact of mass and leg length on pelvic tilt angles. However, the graph of the mass data is much more clustered and accurate. This was confirmed by running two one-tailed anova tests in order to determine their statistical significance. The anova ran with mass had a p value of 0.228 while the anova ran with leg lengths had a p value of 0.236. These p values indicate that they are not statistically significant differences. However, it does tell us that mass seems to be slightly more correlated to pelvic tilt angle compared to the impact that leg lengths do.
-# Discussions
-
-
 
 # Discussion
 In this experiment, bipedal locomotion was modeled by an inverted pendulum. Students performed walking trials that varied in speed (fast and slow) and form (normal and locked knee). It was evident that the class-wide theoretical velocity was significantly larger than the recorded pendulum walking speed. As the calculated Froude number increased, the ratio of the recorded velocity for pendulum walking to the predicted maximum velocity also increased, which signifies that there were points in time when both feet were lifted off the ground. Thus, this is not a reliable model for pendulum walking. In addition, it is not possible to draw concrete conclusions as to how human size and sex impact an individual's gait speed. Our data showed slightly significant differences between walking speed and sex. After further statistical testing emphasizing covariance, it was concluded that correlations between sex or leg length and gait speed were not significant. Measurements of pelvic tilt were collected in conjunction with speed during gait. The majority of individuals had a greater maximum mean pelvic tilt angle while walking faster compared to walking slower. However, further data collection showed neither leg length nor body mass have a strong statistical impact on the maximum mean pelvic tilt angle.
