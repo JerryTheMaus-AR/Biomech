@@ -113,7 +113,7 @@ class.gait.ratio
 ggplot(class.gait.ratio, aes(x= Froude_number, y= ratio))+geom_point()+geom_smooth(method= lm, se= F)+annotate("text", x= 0.8, y= 2.3, label= (paste0("slope==", coef(lm(class.gait.ratio$ratio ~ class.gait.ratio$Froude_number))[2])),parse= TRUE)+ theme(plot.caption= element_text(hjust=0))+xlab("Froude Number")+ylab("Ratio of Recorded V to Vmax")
 ```
 
-Figure 1. This figure depicts the relationship between the ratio of the recorded velocity for pendulum walking to the predicted maximum velocity and the Froude number
+***Figure 1. This figure depicts the relationship between the ratio of the recorded velocity for pendulum walking to the predicted maximum velocity and the Froude number.***
 
 ## Report Question 2
 ```{r, echo=FALSE}
@@ -122,7 +122,7 @@ class.gait %>%
   xlab('Leg Length (m)')+ ylab('Recorded Pendulum Walking Speed (m/s)')+ ggtitle('Size vs. Pendulum Walking Speed by Sex')
 ```
 
-Figure 2. Leg length was plotted against recorded pendulum walking speed for each individual with complete information in the class data set, and color coded based on reported sex
+***Figure 2. Leg length was plotted against recorded pendulum walking speed for each individual with complete information in the class data set, and color coded based on reported sex.***
 
 ```{r, echo=FALSE}
 #gait by sex (only) boxplot
@@ -132,7 +132,7 @@ class.gait %>%
   xlab('Sex')
 ```
 
-Figure 3. This boxplot represents the recorded pendulum walking speed separated by sex, and a t-test with an alpha of 0.05 reported a p-value of 0.048
+***Figure 3. This boxplot represents the recorded pendulum walking speed separated by sex, and a t-test with an alpha of 0.05 reported a p-value of 0.048.***
 
 ```{r, echo=FALSE}
 #leg length by sex
@@ -157,7 +157,7 @@ class.gait2
 ggplot(class.gait2, aes(x= ID, y= difference))+geom_point()+geom_smooth(method= lm, se= FALSE)+annotate("text", x= 15, y= 7, label= (paste0("slope==", coef(lm(class.gait2$difference ~ class.gait2$ID))[2])),parse= TRUE)+ theme(plot.caption= element_text(hjust=0))+xlab("Subject")+ylab("Difference in Max Mean Pelvic Tilt Angle (deg)")
 ```
 
-Figure 4. This figure depicts the difference in max mean pelvic tilt angle between a fast walking speed and a slow walking speed
+***Figure 4. This figure depicts the difference in max mean pelvic tilt angle between a fast walking speed and a slow walking speed.***
 
 ## Report Question 4
 ```{r, Mass Plot, echo=FALSE}
@@ -165,13 +165,13 @@ ggplot(class.gait, aes(x= Mass_Kg, y= norm_mean_max_pt_angle, color= sex))+geom_
 
 ```
 
-Figure 5. This figure depicts the relationship between mean max pelvic tilt angle (deg) and mass (kg). The data is further categorized by the individual's sex.
+***Figure 5. This figure depicts the relationship between mean max pelvic tilt angle (deg) and mass (kg). The data is further categorized by the individual's sex.***
 
 ```{r, Length Plot, echo=FALSE}
 ggplot(class.gait, aes(x= leg_length_m, y= norm_mean_max_pt_angle, color= sex))+geom_point() + ylab("Normal Mean Maximum Pelvic Tilt (deg)") + xlab("Leg Length (m)") + theme(plot.caption= element_text(hjust=0))
 ```
 
-Figure 6. This figure depicts the relationship between mean max pelvic tilt angle (deg) and leg length (m). The data is further categorized by the individual's sex.
+***Figure 6. This figure depicts the relationship between mean max pelvic tilt angle (deg) and leg length (m). The data is further categorized by the individual's sex.***
 ```{r, Anova Tests, echo=FALSE}
 mass.aov <- aov(norm_mean_max_pt_angle ~ Mass_Kg, data= class.gait)
 summary(mass.aov)
