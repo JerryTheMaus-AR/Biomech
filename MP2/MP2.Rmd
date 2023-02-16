@@ -143,6 +143,7 @@ ancova_model <- aov(`recorded_walking_ms^-1` ~ sex + leg_length_m, data = class.
 Anova(ancova_model, type="III") 
 
 ```
+
 Our data shows only a slightly significant correlation between walking speed and sex (p=0.048). Females had an average walking speed of 1.29m/s while males had an average speed of 1.43m/s. 
 
 ## Report Question 3
