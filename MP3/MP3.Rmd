@@ -29,7 +29,7 @@ library(ggpmisc)
 
 ## Question 1
 
-Load was calculated in our shared group 3 google sheet using normalized values from our recordings. All formula are in the excel sheet.  
+Load strain, unload strain (both normalized unit), load (in N), and area (in m^2^) were calculated from experimental data and manually entered into r for further processing analysis. We obtained the slope of the stress-strain curve in both conditions, which corresponds to the stiffness of the material in the elastic region.
 
 ```{r, intestine, message=FALSE}
 #all units are SI
@@ -46,7 +46,10 @@ longi.pigdf <- longi.pigdf %>%
   mutate(stress = load.g/area)
 longi.pigdf %>% 
   ggplot(aes(x=load.strain,y=stress))+geom_point()+geom_smooth(method=lm,se=FALSE)+
-  stat_poly_eq(aes(label =paste(after_stat(eq.label),after_stat(rr.label), sep = "*\", \"*")))
+  stat_poly_eq(aes(label =paste(after_stat(eq.label),after_stat(rr.label), sep = "*\", \"*")))+
+  labs(title='Circumferential Stress v. Strain',
+       y=expression(Stress~(N/m^{2})))+
+  xlab('Strain')
   
 #creating circumferential loading data frame
 circum.pigdf <- data.frame(
@@ -61,7 +64,10 @@ circum.pigdf <- circum.pigdf %>%
   mutate(stress = load.g/area)
 circum.pigdf %>% 
   ggplot(aes(x=load.strain,y=stress))+geom_point()+geom_smooth(method=lm,se=FALSE)+
-  stat_poly_eq(aes(label =paste(after_stat(eq.label),after_stat(rr.label), sep = "*\", \"*")))
+  stat_poly_eq(aes(label =paste(after_stat(eq.label),after_stat(rr.label), sep = "*\", \"*")))+
+  labs(title='Circumferential Stress v. Strain',
+       y=expression(Stress~(N/m^{2})))+
+  xlab('Strain')
 
 
 ```
@@ -108,7 +114,7 @@ drydf <- benddf %>%
 barplot(drydf$flx.stiff,
         names.arg = c('flat.fast','flat.slow','flip.slow'),
         xlab = 'Condition',
-        ylab = 'Flexural Stiffness (N/m^2)',
+        ylab = 'Flexural Stiffness (N/m^2^)',
         main = 'Flexural Stiffness v. Beam Orientation')
 ```
 
@@ -151,7 +157,7 @@ print(masterdf)
 masterdf %>%
   ggplot(aes(slope,flx.stiff,color=dry.wet))+geom_point(size=2.5)+
   xlab('Strain Rate')+
-  ylab('Flexural Stiffness (N/m^2)')+
+  ylab('Flexural Stiffness (N/m^2^)')+
   labs(title='Strain Rate v. FS by Moisture')+
   ylim(min=0,max=0.08)+
   xlim(min=0,max=150)
