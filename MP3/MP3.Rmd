@@ -21,17 +21,18 @@ library(ggpmisc)
 
 
 # Introduction
-
-
-
+  The third Mini Project involves examining experimental methods for measuring the material and structural properties of biological tissue such as wood and intestine. Material properties are those that are inherent to the material itself and are independent of its size and shape. Structural properties, on the other hand, are related to the size and shape of the material. By understanding these properties, researchers can gain valuable insights into the behavior and performance of biological tissues, which may be useful in a variety of fields, including engineering and medicine.
 
 # Materials and Methods
 
-## Question 1
+  The wood bending experiment involves three-point bending of a piece of wood to measure its load and deformation properties. The wood is initially deflected a known distance, and then a cylinder is depressed against the wood at either a slow or fast speed to read the load data from the load cell system. An important factor to consider in this experiment is anisotropy, which refers to the variation in properties of a material along different axes. Wood is an anisotropic material, meaning that its properties can vary depending on the direction in which it is measured. Therefore, it is crucial to take measurements in different orientations to gain a comprehensive understanding of its properties. For procedure, see directions on the course website. No amendments were made to the procedure.  
+  
+  The pig intestine experiment involves measuring the stress-strain relationship of the intestine by cutting a small strip of the material and stretching it with a known force applied to one end. The stress created within the material causes it to elongate, and we can measure its deformation and derive its stress-strain relationship. The experiment also involves testing the intestine in both axial and circumferential directions to account for and examine anisotropy in the material. For procedure, see directions on the course website.  
+  
+  Load strain, unload strain (both normalized unit), load (in N), and area (in m^2^) were calculated from experimental data and manually entered into r for further processing analysis. We obtained the slope of the stress-strain curve in both conditions, which corresponds to the stiffness of the material in the elastic region according to $M=EI$, where *M* is stiffness, *E* is Young's modulus, and *I* is second moment area. 
 
-Load strain, unload strain (both normalized unit), load (in N), and area (in m^2^) were calculated from experimental data and manually entered into r for further processing analysis. We obtained the slope of the stress-strain curve in both conditions, which corresponds to the stiffness of the material in the elastic region according to $M=EI$, where *M* is stiffness, *E* is Young's modulus, and *I* is second moment area. 
-
-```{r, intestine, message=FALSE}
+# Results
+```{r, intestine axi, message=FALSE,echo=FALSE,fig.cap='**Figure 1**: Stress v. strain curve of the longitudinal loading of the intestine. Specifically, it portrays the increasing stress (addition of nuts weighing 3.2g) added onto the intestine and the resulting strain from it. The best line of fit has a slope of 8.24x10^4^, which represents the stiffness.'}
 #all units are SI
 
 #create longitudinal loading data frame
@@ -50,7 +51,10 @@ longi.pigdf %>%
   labs(title='Circumferential Stress v. Strain',
        y=expression(Stress~(N/m^{2})))+
   xlab('Strain')
-  
+
+```
+
+```{r,intestine cir,message=FALSE,echo=FALSE,fig.cap=}
 #creating circumferential loading data frame
 circum.pigdf <- data.frame(
   load.g = c(6.4,12.8,19.2,25.6,32),
@@ -69,14 +73,8 @@ circum.pigdf %>%
        y=expression(Stress~(N/m^{2})))+
   xlab('Strain')
 ```
-## Question 2
 
-## Question 3
-
-## Question 4
-
-
-```{r,message=FALSE}
+```{r,message=FALSE,echo=FALSE}
 bend.files <- list.files(pattern='*.csv',full.names=FALSE)
 
 benddf <- tibble()
@@ -117,8 +115,7 @@ barplot(drydf$flx.stiff,
 ```
 
 
-## Question 5
-```{r,strain rate,message= FALSE}
+```{r,strain rate,message=FALSE,echo=FALSE}
 
 flatdf <- benddf %>% 
   subset(flat.flip == 'flat') %>% 
@@ -162,12 +159,18 @@ masterdf %>%
 ```
 
 
-# Results
-
-test
 
 # Discussion
 
+## Question 1
+
+## Question 2
+
+## Question 3
+
+## Question 4
+
+## Question 5
 
 
 # Author Contributions
