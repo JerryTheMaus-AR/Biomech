@@ -113,7 +113,6 @@ barplot(drydf$flx.stiff,
 ```
 
 
-
 ## Question 5
 ```{r,strain rate,message= FALSE}
 
