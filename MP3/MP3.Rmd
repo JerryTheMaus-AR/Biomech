@@ -112,6 +112,9 @@ barplot(drydf$flx.stiff,
         main = 'Flexural Stiffness v. Beam Orientation')
 ```
 
+
+
+## Question 5
 ```{r,strain rate,message= FALSE}
 
 flatdf <- benddf %>% 
