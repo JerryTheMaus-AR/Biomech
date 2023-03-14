@@ -1,0 +1,12 @@
+---
+title: "MP3"
+author: "Tingwei Hu, Brendan Fox, Minho Heo, Christian Peterson"
+date: "2023-03-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
