@@ -28,23 +28,27 @@ library(ggpmisc)
 # Materials and Methods
 
 ## Question 1
+
+Load was calculated in our shared group 3 google sheet using normalized values from our recordings. All formula are in the excel sheet.  
+
 ```{r, intestine, message=FALSE}
 #all units are SI
 
+#create longitudinal loading data frame
 longi.pigdf <- data.frame(
   load.g = c(0.062784,0.125568,0.188352,0.251136,0.31392),
   load.strain = c(0.02666666667,0.05333333333,0.06666666667,0.08,0.1066666667),
   unload.strain = c(0.08,0.09333333333,0.09333333333,0.1066666667,NA),
   area = 0.4/10000
 )
-
+#calculate stress and plot stress strain curve
 longi.pigdf <- longi.pigdf %>% 
   mutate(stress = load.g/area)
 longi.pigdf %>% 
   ggplot(aes(x=load.strain,y=stress))+geom_point()+geom_smooth(method=lm,se=FALSE)+
   stat_poly_eq(aes(label =paste(after_stat(eq.label),after_stat(rr.label), sep = "*\", \"*")))
   
-
+#creating circumferential loading data frame
 circum.pigdf <- data.frame(
   load.g = c(6.4,12.8,19.2,25.6,32),
   load.strain = c(0.2222222222,0.4444444444,0.4444444444,0.5555555556,0.6666666667),
@@ -52,6 +56,7 @@ circum.pigdf <- data.frame(
   area = 1.18/10000
 )
 
+#calculate stress and plot stress strain curve
 circum.pigdf <- circum.pigdf %>% 
   mutate(stress = load.g/area)
 circum.pigdf %>% 
