@@ -29,7 +29,7 @@ library(ggpmisc)
 
 ## Question 1
 
-Load strain, unload strain (both normalized unit), load (in N), and area (in m^2^) were calculated from experimental data and manually entered into r for further processing analysis. We obtained the slope of the stress-strain curve in both conditions, which corresponds to the stiffness of the material in the elastic region.
+Load strain, unload strain (both normalized unit), load (in N), and area (in m^2^) were calculated from experimental data and manually entered into r for further processing analysis. We obtained the slope of the stress-strain curve in both conditions, which corresponds to the stiffness of the material in the elastic region according to $M=EI$, where *M* is stiffness, *E* is Young's modulus, and *I* is second moment area. 
 
 ```{r, intestine, message=FALSE}
 #all units are SI
@@ -68,8 +68,6 @@ circum.pigdf %>%
   labs(title='Circumferential Stress v. Strain',
        y=expression(Stress~(N/m^{2})))+
   xlab('Strain')
-
-
 ```
 ## Question 2
 
@@ -83,6 +81,7 @@ bend.files <- list.files(pattern='*.csv',full.names=FALSE)
 
 benddf <- tibble()
 
+#create date frame with all relevant info
 for (i in 1:length(bend.files)){
   metdat <- str_split(bend.files[i], pattern = '_')
   catchdf <- data.frame(
@@ -101,10 +100,9 @@ for (i in 1:length(bend.files)){
            deflection = 1.5 / 1000) %>% 
     mutate(flx.stiff = (force*(length^3))/(3*deflection))
 
-  #combine all conditions!!
+  #combine all conditions!
   benddf <- rbind(benddf,catchdf)
 }
-
 
 print(benddf)
 

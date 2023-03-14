@@ -390,7 +390,10 @@ viscoelasticity?</li>
 area (in m<sup>2</sup>) were calculated from experimental data and
 manually entered into r for further processing analysis. We obtained the
 slope of the stress-strain curve in both conditions, which corresponds
-to the stiffness of the material in the elastic region.</p>
+to the stiffness of the material in the elastic region according to
+<span class="math inline">\(M=EI\)</span>, where <em>M</em> is
+stiffness, <em>E</em> is Young’s modulus, and <em>I</em> is second
+moment area.</p>
 <pre class="r"><code>#all units are SI
 
 #create longitudinal loading data frame
@@ -439,6 +442,7 @@ Question 2</p>
 
 benddf &lt;- tibble()
 
+#create date frame with all relevant info
 for (i in 1:length(bend.files)){
   metdat &lt;- str_split(bend.files[i], pattern = &#39;_&#39;)
   catchdf &lt;- data.frame(
@@ -457,10 +461,9 @@ for (i in 1:length(bend.files)){
            deflection = 1.5 / 1000) %&gt;% 
     mutate(flx.stiff = (force*(length^3))/(3*deflection))
 
-  #combine all conditions!!
+  #combine all conditions!
   benddf &lt;- rbind(benddf,catchdf)
 }
-
 
 print(benddf)</code></pre>
 <pre><code>##   dry.wet flat.flip slow.fast     force length deflection  flx.stiff
