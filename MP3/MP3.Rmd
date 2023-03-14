@@ -3,6 +3,7 @@ title: "MP3"
 author: "Tingwei Hu, Brendan Fox, Minho Heo, Christian Peterson"
 date: "2023-03-14"
 output: html_document
+bibliography: MP3.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,15 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggpmisc)
 ```
-
-1. What is the stiffness of the intestine in longitudinal and axial loading? How does the stiffness in these two directions compare?
-2. What evidence do you have that an intestinal tube is anisotropic?
-3. What do you think the function of anisotropy is in the intestine?
-4. Did beam orientation result in different flexural stiffness?
-5. Did strain rate affect wood flexural stiffness and did this response vary according to how wet the material was?
-6. How would this be important in loads applied to a human skeletal element?
-7. In your beam analysis, did you find any evidence of viscoelasticity?
-
 
 # Introduction
   The third Mini Project involves examining experimental methods for measuring the material and structural properties of biological tissue such as wood and intestine. Material properties are those that are inherent to the material itself and are independent of its size and shape. Structural properties, on the other hand, are related to the size and shape of the material. By understanding these properties, researchers can gain valuable insights into the behavior and performance of biological tissues, which may be useful in a variety of fields, including engineering and medicine.
@@ -103,7 +95,10 @@ for (i in 1:length(bend.files)){
 }
 
 print(benddf)
+```
+**Table 1: **Relevant data from all conditions used to calculate flexural stiffness (FS).
 
+```{r,message=FALSE,echo=FALSE,fig.cap='**Figure 3:** Flexural stiffness (*EI*) of different orientations of the dry wood beam. Flexural stiffness was calculated through the derivation of the equation: $d = (FL^3)/(3EI)$.'}
 drydf <- benddf %>% 
   subset(dry.wet == 'dry')
 
@@ -117,7 +112,6 @@ barplot(drydf$flx.stiff,
 
 
 ```{r,strain rate,message=FALSE,echo=FALSE}
-
 flatdf <- benddf %>% 
   subset(flat.flip == 'flat') %>% 
   mutate(flat.flip = NULL,
@@ -149,7 +143,11 @@ for (i in 1:length(bend.files)){
 masterdf <- left_join(placeholderdf,flatdf,by = c('dry.wet','slow.fast'))
 
 print(masterdf)
+```
+**Table 2: **Slope of stress-strain curve and flexural stiffness for each wood condition.
 
+
+```{r,plotting it,message=FALSE,echo=FALSE,fig.cap='**Figure 4: **Flexural stiffness vs. the strain rate of the different beam experiments (flat orientations) on basis of their moistures and the speed of the cylinder depression (fast v. slow). The dry-fast and dry-slow trials had greater strain rate and FS than their respective wet-fast and wet-slow trials.'}
 masterdf %>%
   ggplot(aes(slope,flx.stiff,color=dry.wet))+geom_point(size=2.5)+
   xlab('Strain Rate')+
@@ -164,17 +162,29 @@ masterdf %>%
 # Discussion
 
 ## Question 1
+The stiffness of the intestine in circumferential loading (4.99x105 N/m^2^) is greater than that of axial loading (8.24x104 N/m^2^). In a stress-strain model,  the slope of the curve is representative of the stiffness (Young’s modulus) - although this is under the assumption that the material acts as an ideal spring so that Hooke’s law is in effect and thus the slope is constant. However, in many biological materials this is not the case.  
 
 ## Question 2
+Anisotropy occurs in which stress and strain vary in the direction at which the stress is applied on the respective material. In the experiment testing the structural and material properties of the intestine, the resulting stress v. strain curve for axial and circumferential loaded experiments resulted in differing stiffness values. This indicates that the intestinal tube is anisotropic because the intestine undergoes less stiffness in the axial/longitudinal direction, which biomechanically makes sense in the context of peristalsis. In the instance that the intestinal tube was not anisotropic, the stiffness of the two stress v. strain curves would be the same because that would indicate that regardless of the direction at which stress is applied to the intestine, it undergoes the same strain.
 
 ## Question 3
+The intestine wall is composed of several layers of tissue, including the mucosa, submucosa, muscularis externa, and serosa. These layers have different orientations of collagen fibers, elastin fibers, and smooth muscle cells. Collagen fibers provide the intestine with tensile strength and stiffness, while elastin fibers allow the tissue to stretch and recoil. Similar properties are displayed in various parts of the body.  One that has been studied extensively is the stomach wall. (@zhao2008stomach)  Its three layers allow for specific movement and contraction. The orientation and density of these fibers differ among the layers, leading to anisotropy in the intestine's mechanical properties.  
+
+Additionally, anisotropy may play a role in peristalsis.  Peristalsis is the coordinated contraction and relaxation of smooth muscle in the intestinal wall that propels food and waste through the digestive tract. The anisotropic properties of the intestine, such as the orientation of the collagen fibers and smooth muscle cells, may contribute to the coordinated contractions required for peristalsis. For example, the longitudinal smooth muscle fibers in the muscularis externa are oriented parallel to the long axis of the intestine and contract to shorten the intestine, while the circular smooth muscle fibers are oriented perpendicular to the long axis and contract to constrict the diameter of the intestine. This coordinated contraction and relaxation of smooth muscle is essential for the proper function of the digestive system.
 
 ## Question 4
+The same patterns held true when we investigated the flexural stiffness properties of wood.  Our research found that the elastic modulus and strength of the wood were highly dependent on the direction of the grain, with the longitudinal direction being the strongest and most rigid. Specifically, the flat orientation yielded similar values (0.055 N/m^2^) & 0.0605 N/m^2^) while the flipped orientation yielded a value greater than 3-fold of the flat orientation (0.168 N/m^2^). This indicates that beam orientation does result in differing flexural stiffness, characteristic of its anisotropic properties. Similar studies show replicable results. (@ozyhar2012moisture) The second moment of area, also known as the moment of inertia, is a geometric property that describes how resistant a beam is to bending. The second moment of area is directly proportional to the stiffness of a beam in bending, meaning that a beam with a larger second moment of area will be stiffer than a beam with a smaller second moment of area. The flipped beam had a greater stiffness due to its larger second moment area.
 
-## Question 5
+## Question 5 + 7
+The moisture content also had a significant impact on the mechanical properties of the wood, with lower moisture content resulting in higher strength and stiffness. This was displayed in the experimentation as 
+dry-fast and dry-slow (139.83 vs. 84.24 & 28.07 vs. 13.48 respectively) trials had greater strain rate values than their respective wet-fast and wet-slow trials. Likewise, the dry-fast and dry-slow (0.055 N/m^2^  vs. 0.030 N/m^2^ & 0.060 N/m^2^ vs 0.029 N/m^2^ respectively ) had greater flexural stiffness values than their respective wet-fast and wet-slow  trials. For moist materials, the rate of strain becomes a key factor in determining the overall stiffness.  The moist piece of wood was stiffer than the dry piece during faster rates of strain because it took on more elastic properties. There was evidence of viscoelasticity in the beams seen by the differences displayed at varying rates of speed during compression. Viscoelasticity refers to the time-dependent behavior of materials that exhibit both elastic (recoverable) and viscous (non-recoverable) deformation when subjected to stress. Wood is a viscoelastic material, which means that its behavior under load depends on both the rate and duration of the applied stress.
+
+## Question 6
+This understanding of how beam orientation and strain rate can be applied when looking at how loads are applied to the human skeletal elements. Similar to the dry wood, many of the skeletal long bones have osteons that run in the longitudinal direction. This allows for the bones to maintain their rigid structure when faced with high levels of stress. Scientists have tested the impacts of orientation and strain rate on human bones before and found that stresses applied in the axial direction of the skeleton were found to have larger ultimate stress and strain compared to the lateral direction, while an increase in strain rate of both axial and lateral led to decreases in ultimate strain in both (@kemper2008tensile).  Any changes to the orientation of the bone as well as the orientation of the osteons within the bone can cause significant changes to the tensile strength of the bone. However, this change can be important as our skeletal bones are under stress from various directions, therefore certain bones need to have a multitude of osteon orientations to withstand the stress applied in a multi directional fashion.
+
 
 
 # Author Contributions
-Tingwei Hu: Data analysis and plots
+All authors contributed equally to the project.
 
 # References
