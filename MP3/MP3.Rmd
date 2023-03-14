@@ -72,42 +72,51 @@ circum.pigdf %>%
 ## Question 4
 
 
-```{r,}
+```{r,message=FALSE}
 bend.files <- list.files(pattern='*.csv',full.names=FALSE)
 
-benddf <- data.frame(
-    dry.wet = NA,
-    flat.flip = NA,
-    force = NA,
-    deflection = NA,
-    length = NA,
-    flx.stiff = NA
-  )
+benddf <- tibble(
+  dry.wet = character(),
+  flat.flip = character(),
+  force = numeric(),
+  length = numeric(),
+  deflection = numeric(),
+  flx.stiff = numeric()
+)
 
-for (i in length(bend.files)){
+for (i in 1:length(bend.files)){
   metdat <- str_split(bend.files[i], pattern = '_')
   catchdf <- data.frame(
     dry.wet = metdat[[1]][2],
     flat.flip = metdat[[1]][3],
-    force = NA,
-    deflection = NA,
-    length = 35/1000,
-    flx.stiff = NA
+    slow.fast = gsub('.csv','',metdat[[1]][4])
   )
-  tmpdf <- read_csv(bend.files[1]) %>% 
+  tmpdf <- read_csv(bend.files[i]) %>% 
     mutate(
       strain = abs(strain), 
       g = abs(g)
     )
-  catchdf$force[1] <- max(tmpdf$g) / 1000 * 9.81
-  catchdf$deflection[1] <- 1.5 / 1000
-  catchdf$flx.stiff[1] <- (catchdf$force[1] * (catchdf$length[1])^3) / (3 * catchdf$deflection[1])
+  catchdf <- catchdf %>% 
+    mutate(force = max(tmpdf$g) / 1000 * 9.81,
+           length = 35/1000,
+           deflection = 1.5 / 1000) %>% 
+    mutate(flx.stiff = (force*(length^3))/(3*deflection))
+
   #combine all conditions!!
-  
-  bind_rows(benddf,catchdf)
+  benddf <- rbind(benddf,catchdf)
 }
 
+
 print(benddf)
+
+drydf <- benddf %>% 
+  subset(dry.wet == 'dry')
+
+barplot(drydf$flx.stiff,
+        names.arg = c('flat.fast','flat.slow','flip.slow'),
+        xlab = 'Condition',
+        ylab = 'Flexural Stiffness (N/m^2)',
+        main = 'Flexural Stiffness v. Beam Orientation')
 ```
 
 # Results
