@@ -146,6 +146,8 @@ for (i in 1:length(bend.files)){
 
 masterdf <- left_join(placeholderdf,flatdf,by = c('dry.wet','slow.fast'))
 
+print(masterdf)
+
 masterdf %>%
   ggplot(aes(slope,flx.stiff,color=dry.wet))+geom_point(size=2.5)+
   xlab('Strain Rate')+
