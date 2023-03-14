@@ -8,5 +8,78 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(ggpmisc)
 ```
 
+1. What is the stiffness of the intestine in longitudinal and axial loading? How does the stiffness in these two directions compare?
+2. What evidence do you have that an intestinal tube is anisotropic?
+3. What do you think the function of anisotropy is in the intestine?
+4. Did beam orientation result in different flexural stiffness?
+5. Did strain rate affect wood flexural stiffness and did this response vary according to how wet the material was?
+6. How would this be important in loads applied to a human skeletal element?
+7. In your beam analysis, did you find any evidence of viscoelasticity?
+
+
+# Introduction
+
+
+
+
+# Materials and Methods
+
+## Question 1
+```{r, intestine, message=FALSE}
+#all units are SI
+
+longi.pigdf <- data.frame(
+  load.g = c(0.062784,0.125568,0.188352,0.251136,0.31392),
+  load.strain = c(0.02666666667,0.05333333333,0.06666666667,0.08,0.1066666667),
+  unload.strain = c(0.08,0.09333333333,0.09333333333,0.1066666667,NA),
+  area = 0.4/10000
+)
+
+longi.pigdf <- longi.pigdf %>% 
+  mutate(stress = load.g/area)
+longi.pigdf %>% 
+  ggplot(aes(x=load.strain,y=stress))+geom_point()+geom_smooth(method=lm,se=FALSE)+
+  stat_poly_eq(aes(label =paste(after_stat(eq.label),after_stat(rr.label), sep = "*\", \"*")))
+  
+
+circum.pigdf <- data.frame(
+  load.g = c(6.4,12.8,19.2,25.6,32),
+  load.strain = c(0.2222222222,0.4444444444,0.4444444444,0.5555555556,0.6666666667),
+  unload.strain = c(0.4444444444,0.5555555556,0.5555555556,0.5555555556,NA),
+  area = 1.18/10000
+)
+
+circum.pigdf <- circum.pigdf %>% 
+  mutate(stress = load.g/area)
+circum.pigdf %>% 
+  ggplot(aes(x=load.strain,y=stress))+geom_point()+geom_smooth(method=lm,se=FALSE)+
+  stat_poly_eq(aes(label =paste(after_stat(eq.label),after_stat(rr.label), sep = "*\", \"*")))
+
+
+```
+## Question 2
+
+## Question 3
+
+## Question 4
+```{r,}
+
+
+
+
+```
+
+# Results
+
+
+
+# Discussion
+
+
+
+# Author Contributions
+
+# References
