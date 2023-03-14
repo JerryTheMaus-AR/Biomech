@@ -75,14 +75,7 @@ circum.pigdf %>%
 ```{r,message=FALSE}
 bend.files <- list.files(pattern='*.csv',full.names=FALSE)
 
-benddf <- tibble(
-  dry.wet = character(),
-  flat.flip = character(),
-  force = numeric(),
-  length = numeric(),
-  deflection = numeric(),
-  flx.stiff = numeric()
-)
+benddf <- tibble()
 
 for (i in 1:length(bend.files)){
   metdat <- str_split(bend.files[i], pattern = '_')
@@ -118,6 +111,46 @@ barplot(drydf$flx.stiff,
         ylab = 'Flexural Stiffness (N/m^2)',
         main = 'Flexural Stiffness v. Beam Orientation')
 ```
+
+```{r,strain rate,message= FALSE}
+
+flatdf <- benddf %>% 
+  subset(flat.flip == 'flat') %>% 
+  mutate(flat.flip = NULL,
+         force = NULL,
+         length = NULL,
+         deflection = NULL)
+
+placeholderdf <- tibble()
+
+for (i in 1:length(bend.files)){
+  tmpdf <- read_csv(bend.files[i]) %>%
+    mutate(strain = abs(strain)) %>%
+    select(c('ms','strain'))
+  plotdf <- tmpdf[1:which.max(tmpdf$strain),]
+  nums <- coef(lm(plotdf$strain ~ plotdf$ms))
+
+  metdat <- str_split(bend.files[i], pattern = '_')
+  catchdf <- data.frame(
+    dry.wet = metdat[[1]][2],
+    slow.fast = gsub('.csv','',metdat[[1]][4]),
+    flat.flip = metdat[[1]][3]
+  ) %>% 
+    mutate(slope = nums[2]) %>% 
+    subset(flat.flip == 'flat') %>% 
+    mutate(flat.flip = NULL)
+  placeholderdf <- rbind(placeholderdf,catchdf)
+}
+
+masterdf <- left_join(placeholderdf,flatdf,by = c('dry.wet','slow.fast'))
+
+masterdf %>%
+  ggplot(aes(slope,flx.stiff,color=dry.wet))+geom_point()+
+  xlab('Strain Rate')+
+  ylab('Flexural Stiffness (N/m^2)')+
+  labs(title='Strain Rate v. FS by Moisture')
+```
+
 
 # Results
 
