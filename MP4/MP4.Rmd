@@ -1,9 +1,9 @@
 ---
 title: "MP4"
-author: "Nate Mange"
+author: Nate Mange, Joseph Locurto, Samantha Sweeney, Tingwei Hu
 date: "2023-04-12"
 output: html_document
-bibliography: 'MP4.bib'
+bibliography: MP4.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -57,7 +57,7 @@ print(paste0('Lift to drag ratio for puffin: ', as.character(ClCd_puff)))
 print(paste0('Lift to drag ratio for swift: ', as.character(ClCd_swift)))
 
 ```
-```{r,ar vs lift to drag,message=FALSE,echo=FALSE}
+```{r,ar vs lift to drag,message=FALSE}
 class_dat <- read_csv('classdata.csv')
 
 class_dat <- class_dat %>% 
@@ -77,20 +77,36 @@ class_dat %>%
   ggtitle('Correlating lift to drag ratio to aspect ratio')
 
 lm1 <- lm(l2d ~ AR, class_dat)
-lm1_summ <- summary(lm1)
-print('Model formula: lm(l2d ~ AR)')
-print('Coefficients')
-lm1_summ$coefficients
-rsqr <- lm1_summ$r.squared
-print(paste0('R-squared: ',as.character(rsqr[1])))
+summary(lm1)
+
 confint(lm1)
 ```
 
 # Discussion
 
+## Question 1
+The relationship between aspect ratio (AR) and lift-to-drag ratio is hypothesized to be positive, with an increase in AR generally leading to a higher lift-to-drag ratio. A high AR is correlated with a generally longer and slimmer wing, compared to a low AR characterized by a shorter and wider wing. The basis for a higher AR being correlated with a higher lift-to-drag ratio is due to a reduction in induced drag when AR is increased. With a longer wingspan, the flow of air and downwash contributing to a vortex and loss of energy at the wingtips is more spread out, which decreases the amount of induced drag generated. Based on the class data, the proposed hypothesis can be confirmed, with higher reported AR yielded higher calculated Cl/Cd ratios. 
+
+## Question 2
+Within our group’s work alone, it is known that the common swift is a gliding animal while puffins rapidly flap their wings, sometimes hundreds of times a minute. Looking at other groups’ data, another gliding bird would be the peregrine falcon. The peregrine falcons have Cl/Cd of between 10.25 and 12.61 and the common swift has a value of 9.95. These values are much larger than those of flapping birds like the puffin (5.029) and the warbler (0.727), values significantly smaller than the peregrine falcon and the puffin. This makes sense as a higher Cl/Cd ratio indicates a greater production of lift than drag, enabling longer periods of flight.  areas and forests.
+
+## Question 3
+Soaring easily enables birds to cover long distances with minimal energy expenditure - though it does come with tradeoffs. Soaring birds typically have larger wingspans and heavier bodies than non-soaring birds. This makes them less agile and more vulnerable to predators. Soaring birds typically require strong thermal currents to maintain altitude, limiting their range. Thermal currents are rising columns of warm air that are formed by the sun heating the ground. When the surface air becomes warmer than the surrounding air, it rises and creates a thermal current. Soaring birds use these currents to gain and maintain altitude without flapping their wings (@leshem1996use). These currents are more common in areas where the surface air heats up quickly, such as deserts. Birds that cannot soar easily tend to be more agile and can fly in a wider range of environments such as coastal areas and forests.
+
+## Question 4
+Bird bodies have many adaptations that optimize lift resulting from the wing. Birds typically have long, narrow wings with a curved, streamlined body shape. A bird’s flat or slightly curved wings help generate lift by creating differences in pressure above and below the wing (high pressure below, low pressure above). The presence of feathers creates a smooth surface over which air can flow - furthering the body's streamlined shape. More specifically, slotted tips at the end of a birds’ wings can work to reduce drag by acting as winglets, or smaller wings attached to the tips of a base wing (@tucker1993gliding). This helps reduce drag and increase efficiency. Lastly, a bird’s hollow bones decrease its weight, making it easier for them to take off and fly.
+
+## Question 5
+Our result that aspect ratio correlates positively with lift to drag ratio was supported by @bataille2007fixed, who found that a higher aspect ratio would lead to a higher lift-to-drag ratio but would decrease the maximum lift coefficient. 
+
+## Question 6
+The flow patterns were significantly different between the two models. For the puffin, there is evidence of a large amount of vortices being produced around the wing model in the quantity of red pixels, which represent pixel movement in the vertical plane, and purple pixels, which represent pixel movement in the negative horizontal plane. Red and purple being present demonstrates the production of vortices because they signal that the fluid around the wings - which is visualized through the fluorescent spheres it carries along - has been diverted from its original path. Analysis of the swift model, however, produces a distinctly different picture, one with few red pixels and almost no purple pixels. The domination of the image by green pixels indicates that the swift’s wings produce few vortices.  
+
+[Vortices decrease the quantity of lift that can be produced by a wing](https://howthingsfly.si.edu/aerodynamics/vortex-drag). The puffin’s optic flow analysis shows many more vortices than the swift’s, and this is reflected in the lift coefficients of the organisms: 11,640 and 52,259, respectively. In other words, the puffins' much lower lift coefficient is reflected in the much larger quantity of vortices that its wings produce. 
+
 
 # Author Contributions
-
+All authors contributed equally to the project.
 
 # References
 
