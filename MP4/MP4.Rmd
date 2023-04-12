@@ -3,7 +3,7 @@ title: "MP4"
 author: "Nate Mange"
 date: "2023-04-12"
 output: html_document
-bibliography: MP4.bib
+bibliography: 'MP4.bib'
 ---
 
 ```{r setup, include=FALSE}
@@ -11,17 +11,31 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 if(!require(ggpubr)) {install.packages(ggpubr)}
 library(ggpubr)
-if(!require(lme4)) {install.packages(lme4)}
-library(lme4)
+if(!require(jpeg)) {install.packages(jpeg)}
+library(jpeg)
+if(!require(ggpmisc)) {install.packages(ggpmisc)}
+library(ggpmisc)
 ```
 
-```{r,include=TRUE}
+# Introduction
+
+MP4 delves into the effects of wing shape on flow patterns with foils moving in a fluid. We aimed to predict bird flight behavior by examining the lift and drag components. We used CAD software and 3D printing technology to create two biomimetic wings for the puffin and the swift that reflect their wing morphologies. Flow patterns were analyzed through particle tracking. We strove to establish the flight characteristics that the wings impart to our birds based on lift, drag, and flow pattern data.
+
+
+# Methods
+
+
+
+
+# Results
+
+```{r,include=TRUE,message=FALSE,echo=FALSE}
 puffin<-read.delim("groupjerry_puffin.txt", header = TRUE, sep = ",",dec = ".")
 
-print(mean(puffin$lift))
-#59.364
-print(mean(puffin$drag))
-#5.96625
+print(paste0('Mean puffin wing lift: ',as.character(mean(puffin$lift))))
+#26.65229
+print(paste0('Mean puffin wing drag: ',as.character(mean(puffin$drag))))
+#5.229446
 
 Cd_puff <- (mean(puffin$drag))/(0.5*1000*0.1^2*0.00102)
 Cl_puff <- (mean(puffin$lift))/(0.5*1000*0.1^2*0.00102)
@@ -30,20 +44,53 @@ ClCd_puff <- Cl_puff/Cd_puff
 
 swift<-read.delim("groupjerry_swift.txt", header = TRUE, sep = ",",dec = ".")
 
-print(mean(swift$lift))
+print(paste0('Mean swift wing lift: ',as.character(mean(swift$lift))))
 #26.65229
-print(mean(swift$drag))
+print(paste0('Mean swift wing drag: ',as.character(mean(swift$drag))))
 #5.229446
 
 Cd_swift <- (mean(swift$drag))/(0.5*1000*0.1^2*0.00102)
 Cl_swift <- (mean(swift$lift))/(0.5*1000*0.1^2*0.00102)
 ClCd_swift <-Cl_swift/Cd_swift
 
-```
-```{r,}
-class_dat <- read_csv('classdata')
+print(paste0('Lift to drag ratio for puffin: ', as.character(ClCd_puff)))
+print(paste0('Lift to drag ratio for swift: ', as.character(ClCd_swift)))
 
 ```
+```{r,ar vs lift to drag,message=FALSE,echo=FALSE}
+class_dat <- read_csv('classdata.csv')
+
+class_dat <- class_dat %>% 
+  drop_na() %>%
+  rename('l2d' = 'Cl/Cd')
+
+class_dat %>% 
+  ggplot(aes(AR,l2d))+geom_point()+geom_smooth(method=lm,se=FALSE)+
+  stat_poly_eq()+
+  theme(axis.line = element_line(colour = "black"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank())+
+  ylab('Lift to Drag Ratio')+
+  xlab('Aspect Ratio')+
+  ggtitle('Correlating lift to drag ratio to aspect ratio')
+
+lm1 <- lm(l2d ~ AR, class_dat)
+lm1_summ <- summary(lm1)
+print('Model formula: lm(l2d ~ AR)')
+print('Coefficients')
+lm1_summ$coefficients
+rsqr <- lm1_summ$r.squared
+print(paste0('R-squared: ',as.character(rsqr[1])))
+confint(lm1)
+```
+
+# Discussion
 
 
+# Author Contributions
+
+
+# References
 

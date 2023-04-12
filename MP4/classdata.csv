@@ -1,0 +1,11 @@
+lift-drag (filename),span in mm,chord in mm,wetted area (m^2),AR,Cd,Cl,Cl/Cd
+group3_FalcoPeregrinus.txt,59,19,0.000874,3.983,1875.51,19234.356,10.25
+group3_warbler.txt,45,22,0.001414,1.442,738.1211,536.962,0.727
+group2_peregrine.txt,45,11.6,0.000933,3.85,214.15,2699.45,12.61
+group2_thrush.txt,45,20.5,0.001500,2.19,745.12,4865,6.53
+group1_albatross.txt,60,,,1.246,,,
+group1_duck.txt,60,,0.000900,4,,,
+groupjerry_puffin.txt,60,18,0.001020,3.53,11698.53,11640,9.95
+groupjerry_swift.txt,60,14,0.001480,2.425,10391,52259,5.029
+group5_swan.txt,45,,,3.874,,,
+group5_peregrine.txt,45,,,4,,,
