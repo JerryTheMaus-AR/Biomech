@@ -8,6 +8,11 @@ bibliography: MP4.bib
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+if(!require(ggpubr)) {install.packages(ggpubr)}
+library(ggpubr)
+if(!require(lme4)) {install.packages(lme4)}
+library(lme4)
 ```
 
 ```{r,include=TRUE}
@@ -35,8 +40,8 @@ Cl_swift <- (mean(swift$lift))/(0.5*1000*0.1^2*0.00102)
 ClCd_swift <-Cl_swift/Cd_swift
 
 ```
-```{r}
-
+```{r,}
+class_dat <- read_csv('classdata')
 ```
 
 
