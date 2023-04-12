@@ -1,0 +1,43 @@
+---
+title: "MP4"
+author: "Nate Mange"
+date: "2023-04-12"
+output: html_document
+bibliography: MP4.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,include=TRUE}
+puffin<-read.delim("groupjerry_puffin.txt", header = TRUE, sep = ",",dec = ".")
+
+print(mean(puffin$lift))
+#59.364
+print(mean(puffin$drag))
+#5.96625
+
+Cd_puff <- (mean(puffin$drag))/(0.5*1000*0.1^2*0.00102)
+Cl_puff <- (mean(puffin$lift))/(0.5*1000*0.1^2*0.00102)
+ClCd_puff <- Cl_puff/Cd_puff
+
+
+swift<-read.delim("groupjerry_swift.txt", header = TRUE, sep = ",",dec = ".")
+
+print(mean(swift$lift))
+#26.65229
+print(mean(swift$drag))
+#5.229446
+
+Cd_swift <- (mean(swift$drag))/(0.5*1000*0.1^2*0.00102)
+Cl_swift <- (mean(swift$lift))/(0.5*1000*0.1^2*0.00102)
+ClCd_swift <-Cl_swift/Cd_swift
+
+```
+```{r}
+
+```
+
+
+
