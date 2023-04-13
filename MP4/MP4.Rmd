@@ -115,8 +115,10 @@ plot_jpeg <-  function(path, add=FALSE)
 }
 
 plot_jpeg('Puffin_OF.jpg')
-plot_jpeg('Swift_OF.jpg')
+title('Puffin wing vortices analysis')
 
+plot_jpeg('Swift_OF.jpg')
+title('Swift wing vortices analysis')
 ```
 
 
