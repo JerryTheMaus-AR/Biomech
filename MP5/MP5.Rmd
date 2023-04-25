@@ -7,21 +7,44 @@ bibliography: 'MP5.bib'
 
 ---
 
+# Introduction
+
+# Methods 
+
+
+
+# Results
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(lme4)
+library(ggpmisc)
 ```
 
-```{r,read data}
+```{r,read data,include=FALSE}
 airdata <- read_csv('data.csv') %>% 
   rename('activity' = '...1')
-
-airdata %>% 
-  ggplot(aes(RH,Rf))+geom_point()+geom_smooth(method=lm,se=FALSE)+
-  facet_wrap(~activity)
-
-lm1 <- lm(Rf ~ RH ,data=airdata)
-summary(lm1)
-
-
 ```
+
+```{r,q1}
+#q1 how does RH affect Rf
+airdata %>% 
+  group_by(RH) %>% 
+  summarise(Rf_avg = mean(Rf)) %>% 
+  ggplot(aes(RH,Rf_avg))+geom_point()+geom_smooth(method=lm,se=FALSE)+stat_poly_eq(use_label(c('eq','R2','p')))
+```
+```{r,q2}
+airdata %>% 
+  ggplot(aes(RH,Suspension_time))+geom_point()+theme_bw()+facet_wrap(~ini_size,scales='free')
+#sus time highest for lowest RH
+```
+```{r,q3}
+airdata %>% 
+  ggplot(aes(ini_size,Suspension_time,col=RH))+geom_point()+theme_bw()
+
+lm1 <- lm(Suspension_time ~ RH * ini_size, data = airdata)
+summary(lm1)
+```
+# Discussion
+
+# Author Contributions
+
+# References
