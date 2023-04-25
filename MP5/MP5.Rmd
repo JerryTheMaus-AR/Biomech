@@ -9,9 +9,19 @@ bibliography: 'MP5.bib'
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(lme4)
 ```
 
 ```{r,read data}
-airdata <- read_csv('data.csv')
+airdata <- read_csv('data.csv') %>% 
+  rename('activity' = '...1')
+
+airdata %>% 
+  ggplot(aes(RH,Rf))+geom_point()+geom_smooth(method=lm,se=FALSE)+
+  facet_wrap(~activity)
+
+lm1 <- lm(Rf ~ RH ,data=airdata)
+summary(lm1)
+
 
 ```
