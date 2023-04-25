@@ -1,0 +1,17 @@
+---
+title: "MP5"
+author: "Tingwei Hu, Brendan Fox, Minho Heo, Christian Peterson"
+date: "2023-04-25"
+output: html_document
+bibliography: 'MP5.bib'
+
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+```{r,read data}
+airdata <- read_csv('data.csv')
+
+```
