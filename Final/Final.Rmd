@@ -11,6 +11,9 @@ library(tidyverse)
 
 if(!require(ggpubr)) {install.packages(ggpubr)}
 library(ggpubr)
+
+if(!require(ez)) {install.packages(ez)}
+library(ez)
 ```
 
 ```{r,read files and calculations,message=FALSE}
@@ -24,6 +27,9 @@ cond <- vector()
 trial <- vector()
 max_acc <- vector()
 avg_varknee <- vector()
+
+#define value
+s_per_frame <- 0.03192825112
 
 #loop iterates through files to get metadata and do calculations
 for (f in filenames){
@@ -59,9 +65,21 @@ for (f in filenames){
   avg_varknee <- append(avg_varknee,var_df$mean_var[1])
   
   #calculate acceleration
+  #first add time
+  rows <- nrow(tmpf1)
+  tmpf1$time <- seq(0,(rows-1) * s_per_frame,s_per_frame)
+  #delta position/delta time to get v, then delta v/delta time to get acc
+  tmpf2 <- tmpf1 %>% 
+    select(c(PID,x_3,time)) %>% 
+    mutate(diff_t = time - lag(time, default = time[1]),
+         diff_p = abs(x_3 - lag(x_3, default = x_3[1])),
+         v = diff_p/diff_t,
+         diff_v = abs(v - lag(v, default = 0)),
+         acc = diff_v/diff_t) %>% 
+    drop_na(acc)
+  #add max acceleration
+  max_acc <- append(max_acc,max(tmpf2$acc))
   
-    
-  break
 }
 
 #initiate master dataframe
@@ -72,7 +90,7 @@ df$subj <- subj
 df$cond <- cond
 df$trial <- trial
 df$avg_varknee <- avg_varknee
-#df$max_acc <- 
+df$max_acc <- max_acc
 
 #delete the first column (placeholder) in the master dataframe
 df <- df[,-1]
@@ -80,12 +98,26 @@ df <- df[,-1]
 
 ```
 
-```{r,experiment}
-tmpf1 %>% 
-  mutate(var = (abs(knee_dist - ori_dist))/ori_dist) %>% 
-  .[-1,] %>% 
-  summarise(mean_var = mean(var))
+```{r,see df and run anova,warning=FALSE}
+df
 
+anov1 <- ezANOVA(
+  data = df,
+  wid = subj,
+  dv = avg_varknee,
+  within = cond
+)
+
+print(anov1)
+
+anov2 <- ezANOVA(
+  data = df,
+  wid = subj,
+  dv = max_acc,
+  within = cond
+)
+
+print(anov2)
 ```
 
 TID1 vs TID2 for every trial - DONE
