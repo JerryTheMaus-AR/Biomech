@@ -26,7 +26,7 @@ subj <- vector()
 cond <- vector()
 trial <- vector()
 max_acc <- vector()
-avg_varknee <- vector()
+sd_varknee <- vector()
 
 #define value
 s_per_frame <- 0.03192825112
@@ -61,8 +61,8 @@ for (f in filenames){
   var_df <- tmpf1 %>% 
     mutate(var = (abs(knee_dist - ori_dist))/ori_dist) %>% 
     .[-1,] %>% 
-    summarise(mean_var = mean(var))
-  avg_varknee <- append(avg_varknee,var_df$mean_var[1])
+    summarise(sd_var = sd(var))
+  sd_varknee <- append(sd_varknee,var_df$sd_var[1])
   
   #calculate acceleration
   #first add time
@@ -89,7 +89,7 @@ df <- tibble(matrix(NA,nrow = length(subj),ncol=1))
 df$subj <- subj
 df$cond <- cond
 df$trial <- trial
-df$avg_varknee <- avg_varknee
+df$sd_varknee <- sd_varknee
 df$max_acc <- max_acc
 
 #delete the first column (placeholder) in the master dataframe
@@ -99,12 +99,10 @@ df <- df[,-1]
 ```
 
 ```{r,see df and run anova,warning=FALSE}
-df
-
 anov1 <- ezANOVA(
   data = df,
   wid = subj,
-  dv = avg_varknee,
+  dv = sd_varknee,
   within = cond
 )
 
@@ -119,7 +117,13 @@ anov2 <- ezANOVA(
 
 print(anov2)
 ```
+```{r,experiment}
+tmpf1 %>% 
+    mutate(var = (abs(knee_dist - ori_dist))/ori_dist) %>% 
+    .[-1,] %>% 
+    summarise(sd_var = sd(var))
 
+```
 TID1 vs TID2 for every trial - DONE
 
 individual variability between conditions - Use data above
