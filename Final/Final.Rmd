@@ -1,0 +1,99 @@
+---
+title: "BiomechFinal"
+author: "Nate, Andrew, Christian, Tingwei"
+date: "2023-05-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+if(!require(ggpubr)) {install.packages(ggpubr)}
+library(ggpubr)
+```
+
+```{r,read files and calculations,message=FALSE}
+
+#find files
+filenames <- list.files(path = './Fiji_Points')
+
+#initiate empty vectors to store info
+subj <- vector()
+cond <- vector()
+trial <- vector()
+max_acc <- vector()
+avg_varknee <- vector()
+
+#loop iterates through files to get metadata and do calculations
+for (f in filenames){
+  tmpf <- read_csv(paste0('./Fiji_Points/',f))
+  #identify unscaled csvs, this will be taken out later
+  if (colnames(tmpf)[4] != 'x [cm]'){next}
+  
+  #get metadata
+  metdat <- str_split(f,pattern='_')
+  metdat[[1]][3] <- as.character(gsub('.csv','',metdat[[1]][3]))
+  metdat <- unlist(metdat)
+  
+  #find info and add to new columns
+  subj <- append(subj,metdat[2])
+  cond <- append(cond,metdat[1])
+  trial <- append(trial,metdat[3])
+  
+  #keep columns we want from the read file and calculate horizontal knee distance for every instance
+  tmpf1 <- tmpf[,2:5]%>% 
+    rename(x = 'x [cm]',
+          y = 'y [cm]') %>% 
+    pivot_wider(names_from = TID,values_from = c(x,y)) %>% 
+    select(-c(y_1,y_2,y_3)) %>% 
+    drop_na(x_1) %>% 
+    drop_na(x_2) %>% 
+    mutate(knee_dist = abs(x_1 - x_2))
+  #find variation from starting knee distance and calculate mean
+  ori_dist <-  tmpf1$knee_dist[1]
+  var_df <- tmpf1 %>% 
+    mutate(var = (abs(knee_dist - ori_dist))/ori_dist) %>% 
+    .[-1,] %>% 
+    summarise(mean_var = mean(var))
+  avg_varknee <- append(avg_varknee,var_df$mean_var[1])
+  
+  #calculate acceleration
+  
+    
+  break
+}
+
+#initiate master dataframe
+df <- tibble(matrix(NA,nrow = length(subj),ncol=1))
+
+#add info to master dataframe 
+df$subj <- subj
+df$cond <- cond
+df$trial <- trial
+df$avg_varknee <- avg_varknee
+#df$max_acc <- 
+
+#delete the first column (placeholder) in the master dataframe
+df <- df[,-1]
+
+
+```
+
+```{r,experiment}
+tmpf1 %>% 
+  mutate(var = (abs(knee_dist - ori_dist))/ori_dist) %>% 
+  .[-1,] %>% 
+  summarise(mean_var = mean(var))
+
+```
+
+TID1 vs TID2 for every trial - DONE
+
+individual variability between conditions - Use data above
+
+TID3 - need to verify time per frame
+
+SA_J_2 & Un_S_3 were not scaled
+
+7.12/223 = 0.03192825112 seconds/frame
